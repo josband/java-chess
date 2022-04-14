@@ -1,12 +1,14 @@
 package chess.board;
 
+import chess.pieces.Piece;
+
 public class Tile {
     
     // A tile will contain a piece and have a coordinate within a matrix
     // TODO: Handle GUI
     private Piece piece;
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Tile(int x, int y, Piece piece) {
         this.x = x;

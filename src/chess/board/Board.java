@@ -2,11 +2,13 @@ package chess.board;
 
 import java.util.*;
 
+import chess.pieces.Piece;
+
 public class Board {
     private Piece[][] board;
-    List<Piece> blackActivePieces;
-    List<Piece> whiteActivePieces;
-    List<Move> moves;
+    private List<Piece> blackActivePieces;
+    private List<Piece> whiteActivePieces;
+    private List<Move> moves;
 
     private final int BOARD_SIZE = 8;
     private final boolean  WHITE = true;
@@ -19,40 +21,37 @@ public class Board {
         
         // Initialize the board with bloack and white pieces
         for(int i = 0; i < BOARD_SIZE; i++) {
-            board[1][i] = new Pawn(); 
-            board[6][i] = new Pawn();
+            // board[1][i] = new Pawn(); 
+            // board[6][i] = new Pawn();
 
-            switch (i) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
+            // switch (i) {
+            //     case 0:
+            //         board[0][i] = new Rook();
+            //         board[0][BOARD_SIZE - 1 - i] = new Rook();
+            //         board[7][i] = new Rook();
+            //         board[0][BOARD_SIZE - 1 - i] = new Rook();
+            //         break;
+            //     case 1:
+            //         board[0][i] = new Knight();
+            //         board[0][BOARD_SIZE - 1 - i] = new Knight();
+            //         board[7][i] = new Knight();
+            //         board[0][BOARD_SIZE - 1 - i] = new Knight();
+            //         break;
+            //     case 2:
+            //         board[0][i] = new Bishop();
+            //         board[0][BOARD_SIZE - 1 - i] = new Bishop();
+            //         board[7][i] = new Bishop();
+            //         board[0][BOARD_SIZE - 1 - i] = new Bishop();
+            //         break;
+            //     case 3:
+            //         board[0][i] = new Queen();
+            //         board[7][i] = new Queen();
+            //         break;
+            //     case 4:
+            //         board[0][i] = new King();
+            //         board[7][i] = new King();
+            //         break;
+            // }
         }
-
-        board[0][0] = new Rook();
-        board[0][7] = new Rook();
-        board[7][0] = new Rook();
-        board[7][7] = new Rook();
-
-        board[0][1] = new Knight();
-        board[0][6] = new Knight();
-        board[7][1] = new Knight();
-        board[7][6] = new Knight();
-
-        board[0][2] = new Bishop();
-        board[0][5] = new Bishop();
-        board[7][2] = new Bishop();
-        board[7][5] = new Bishop();
-
-        board[0][3] = new Queen();
-        board[7][3] = new Queen();
-
-        board[0][4] = new King();
-        board[7][4] = new King();
     }
 }
