@@ -4,10 +4,13 @@ import java.util.*;
 
 public class Board {
     private Piece[][] board;
-    LinkedList<Piece> blackActivePieces;
-    LinkedList<Piece> whiteActivePieces;
+    List<Piece> blackActivePieces;
+    List<Piece> whiteActivePieces;
+    List<Move> moves;
 
     private final int BOARD_SIZE = 8;
+    private final boolean  WHITE = true;
+    private final boolean  BLACK = false;
     // private final static int[] VALUES = {1, 3, 3, 5, 9,
     //                                      -1, -3, -3, -5, -9};
 
@@ -17,6 +20,18 @@ public class Board {
         // Initialize the board with bloack and white pieces
         for(int i = 0; i < BOARD_SIZE; i++) {
             board[1][i] = new Pawn(); 
+            board[6][i] = new Pawn();
+
+            switch (i) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
         }
 
         board[0][0] = new Rook();
