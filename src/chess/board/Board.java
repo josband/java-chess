@@ -5,19 +5,15 @@ import java.util.*;
 import chess.pieces.Piece;
 
 public class Board {
-    private Piece[][] board;
+    private Tile[][] board;
     private List<Piece> blackActivePieces;
     private List<Piece> whiteActivePieces;
     private List<Move> moves;
 
     private final int BOARD_SIZE = 8;
-    private final boolean  WHITE = true;
-    private final boolean  BLACK = false;
-    // private final static int[] VALUES = {1, 3, 3, 5, 9,
-    //                                      -1, -3, -3, -5, -9};
-
+    
     public Board() {
-        board = new Piece[BOARD_SIZE][BOARD_SIZE];
+        board = new Tile[BOARD_SIZE][BOARD_SIZE];
         
         // Initialize the board with bloack and white pieces
         for(int i = 0; i < BOARD_SIZE; i++) {

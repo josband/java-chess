@@ -31,4 +31,8 @@ public class Tile {
     public int getY() {
         return y;
     }
+
+    public boolean isEmpty() {
+        return piece == null;
+    }
 }

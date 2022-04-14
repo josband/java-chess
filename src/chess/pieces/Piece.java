@@ -3,16 +3,11 @@ package chess.pieces;
 import chess.board.Tile;
 
 public abstract class Piece {
-    private boolean dead;
     final int value;
 
     public Piece(int value) {
         this.value = value;
         this.dead = false;
-    }
-
-    public boolean isDead() {
-        return dead;
     }
 
     public void setDead(boolean dead) {
