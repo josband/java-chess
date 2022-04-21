@@ -14,9 +14,9 @@ The GUI will be just the visualization of the game of these interacting componen
 ## Object Requirements
 
 **Pieces**
-    - Position
-    - Alliance/Color
-    - A type (abstract Piece class)
+      - Position
+      - Alliance/Color
+      - A type (abstract Piece class)
 
 **Tiles**
     - 
