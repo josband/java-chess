@@ -33,8 +33,9 @@ The GUI will be just the visualization of the game of these interacting componen
 - List of current pieces (for measuring who has a piece advantage)
 
 **Moves**
-- From coordinate
-- To coordinate
+- From coordinate/tile
+- To coordinate/tile
+- *later* maybe check move
 
 **Aliances**
 
