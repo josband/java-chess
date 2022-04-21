@@ -1,4 +1,4 @@
-# Java Chess **WORK IN PROGRESS**
+# Java Chess **Under Development**
 
 **Contribtors:** Jonah Osband
 
