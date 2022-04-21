@@ -5,9 +5,7 @@ public class Game {
     private Player whitePlayer;
     private Player blackPlayer;
     private List<Move> whiteMoves;
-    private List<Piece> whitePieces;
     private List<Move> blackMoves;
-    private List<Piece> blackPieces;
     private Board board;
 
     
