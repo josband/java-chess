@@ -16,6 +16,7 @@ The GUI will be just the visualization of the game of these interacting componen
 **Pieces**
 - Alliance/Color
 - A type (abstract Piece class)
+- 'Life' status
 
 *Note: Position is not needed as the tiles have the position
 
