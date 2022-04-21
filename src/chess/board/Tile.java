@@ -35,7 +35,7 @@ public class Tile {
         this.piece = piece;
     }
 
-    public boolean isEmpty() {
-        return piece == null;
+    public boolean isOccupied() {
+        return piece != null;
     }
 }

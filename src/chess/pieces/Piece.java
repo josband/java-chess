@@ -11,8 +11,6 @@ public abstract class Piece {
         this.dead = false;
     }
 
-    public abstract List<Move> calculateLegalMoves(Board board, Tile start);
-
     public boolean isDead() {
         return dead;
     }
@@ -24,4 +22,6 @@ public abstract class Piece {
     public Alliance getAlliance() {
         return alliance;
     }  
+    
+    public abstract List<Move> calculateLegalMoves(Board board, Tile start);
 }
