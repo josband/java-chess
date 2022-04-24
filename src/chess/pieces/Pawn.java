@@ -39,18 +39,19 @@ public final class Pawn extends Piece {
             pawnMoves.add(new Move(start, board[y + this.direction][x]));
 
             // Pawns can move two spaces if they are on their starting row
-            if (this.alliance == Alliance.WHITE && y == 1 && board[y + 2 * this.direction][x].getPiece() == null) {
+            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y = 7) 
+                && board[y + 2 * this.direction][x].getPiece() == null) {
                 pawnMoves.add(new Move(start, board[y + (2 * this.direction)][x]));
             }
         }
 
         // Pawns can only capture diagonally if there is a piece on the tile of a different alliance
         // Need to be careful of index out of bounds
-        if (x + 1 < 8 && board[y + this.direction][x + 1].isOccupied() && board[y + this.direction][x + 1].getPiece().alliance != this.alliance) {
+        if (x + 1 < 8 && board[y + this.direction][x + 1].isOccupied() && board[y + this.direction][x + 1].getPiece().getAlliance() != this.alliance) {
             pawnMoves.add(new Move(start, board[y + this.direction][x + 1]));
         }
 
-        if (x - 1 > -1 && board[y + this.direction][x - 1].isOccupied() && board[y + this.direction][x - 1].getPiece().alliance != this.alliance) {
+        if (x - 1 > -1 && board[y + this.direction][x - 1].isOccupied() && board[y + this.direction][x - 1].getPiece().getAlliance() != this.alliance) {
             pawnMoves.add(new Move(start, board[y + this.direction][x - 1]));
         }
         
