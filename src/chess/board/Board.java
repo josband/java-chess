@@ -9,6 +9,7 @@ public class Board {
         this.board = new Tile[8][8];
     }
 
+    // Sets up the board for a new game
     public void resetBoard() {
         
     }
