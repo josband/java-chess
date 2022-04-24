@@ -4,9 +4,9 @@ public class Move {
     private Tile from;
     private Tile to;
 
-    public Move(Tile to, Tile from) {
-        this.to = to;
+    public Move(Tile from, Tile to) {
         this.from = from;
+        this.to = to;
     }
 
     public Tile getFrom() {
