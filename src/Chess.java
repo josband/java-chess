@@ -1,5 +1,3 @@
 public class Chess {
-    public static void main(String[] args) {
-
-    }
+    // Runs the game. Holds main method
 }

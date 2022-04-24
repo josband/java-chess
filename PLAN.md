@@ -8,6 +8,7 @@
 - Players (White and Black)
 - Moves
 - Alliances (color)
+- Maybe an object to check check?
   
 The GUI will be just the visualization of the game of these interacting components
 
