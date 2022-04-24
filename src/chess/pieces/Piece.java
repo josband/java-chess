@@ -2,6 +2,8 @@ package chess.pieces;
 
 import chess.board.Tile;
 
+// Maybe add checking the diagonals and horizontal movements to this class for the 
+// Queen, Rook, and Bishop to share through inheritance
 public abstract class Piece {
     private final Alliance alliance;
     private boolean dead;
