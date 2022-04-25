@@ -24,25 +24,4 @@ public class Bishop {
 
         return bishopMoves;
     }
-
-    private void checkDiagonal(List<Move> bishopMoves, Board board, Tile start, int deltaX, int deltaY) {
-        int currX = start.getX();
-        int currY = start.getY();
-
-        boolean done = false;
-        do {
-            currX += deltaX;
-            currY += deltaY;
-            
-            try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    bishopMoves.add(new Move(start, board[currY][currX]));
-                    done = true;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                done = true;
-            }
-            
-        } while (!done);
-    }
 }
