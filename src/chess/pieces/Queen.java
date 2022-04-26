@@ -16,6 +16,5 @@ public class Queen {
         checkDiagnol(queenMoves, board, start, 1, -1);
         checkDiagnol(queenMoves, board, start, -1, -1);
         checkDiagnol(queenMoves, board, start, -1, 1);
-
     }
 }

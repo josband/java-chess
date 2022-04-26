@@ -38,4 +38,10 @@ public class Tile {
     public boolean isOccupied() {
         return piece != null;
     }
+
+    public Piece removePiece() {
+        Piece removedPiece = this.piece;
+        this.piece = null;
+        return removedPiece;
+    }
 }

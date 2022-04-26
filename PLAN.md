@@ -36,7 +36,7 @@ The GUI will be just the visualization of the game of these interacting componen
 **Moves**
 - From coordinate/tile
 - To coordinate/tile
-- *later* maybe check move
+- *Later* maybe check move
 
 **Aliances**
 
@@ -55,3 +55,7 @@ To generate the list of all possible moves, The piece will need the reference fo
 - Pins where the second piece is the king
 - Castling
 - En Passant
+
+## MID DEVELOPMENT NOTES/IDEAS
+- Make a checkmate object
+- For the display I only have to display a tile since it contains piece data
