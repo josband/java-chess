@@ -12,7 +12,7 @@ public class Board {
     }
 
     // Sets up the board for a new game
-    public void setBoard() {
+    private void setBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
             board[1][i] = new Pawn(); 
             board[6][i] = new Pawn();

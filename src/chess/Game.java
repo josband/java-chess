@@ -1,5 +1,11 @@
 package chess;
 
+import java.util.ArrayList;
+
+import chess.board.Board;
+import chess.pieces.Alliance;
+import chess.player.Player;
+
 // THIS WILL BE IMPLEMENTED BEFORE LAST
 public class Game {
     private Player whitePlayer;
@@ -8,5 +14,11 @@ public class Game {
     private List<Move> blackMoves;
     private Board board;
 
-    
+    public Game() {
+        whitePlayer = new Player(Alliance.WHITE);
+        blackPlayer = new Player(Alliance.BLACK);
+        whiteMoves = new ArrayList<Move>();
+        blackMoves = new ArrayList<Move>();
+        Board board = new Board();
+    }
 }
