@@ -12,7 +12,7 @@ import chess.board.*;
 // Queen, Rook, and Bishop to share through inheritance
 public abstract class Piece {
     private BufferedImage img;
-    private final Alliance alliance;
+    protected final Alliance alliance;
     private boolean dead;
 
     public Piece(Alliance alliance, String imgPath) {
@@ -39,7 +39,7 @@ public abstract class Piece {
     }
 
     // USAGE FOR: Bishop and Queen
-    private void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
+    protected void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
         int currX = start.getX();
         int currY = start.getY();
 
@@ -59,7 +59,7 @@ public abstract class Piece {
     }
 
     // USAGE FOR: Rook and Queen
-    private void checkRankAndFile(List<Move> moves, Board board, Tile start) {
+    protected void checkRankAndFile(List<Move> moves, Board board, Tile start) {
         int currX = start.getX();
         int currY = start.getY();
 

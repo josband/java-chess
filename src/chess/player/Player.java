@@ -1,8 +1,8 @@
 package chess.player;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import chess.pieces.Alliance;
+import chess.pieces.*;
 
 public class Player {
     private Alliance alliance;
@@ -10,7 +10,7 @@ public class Player {
 
     public Player(Alliance alliance) {
         this.alliance = alliance;
-        pieces = new ArrayList<Pieces>();
+        pieces = new ArrayList<Piece>();
     }
 
     public Alliance getAlliance() {
@@ -22,6 +22,10 @@ public class Player {
     }
 
     public void addPieces(List<Piece> pieces) {
-        this.pieces.add(pieces);
+        this.pieces.addAll(pieces);
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }

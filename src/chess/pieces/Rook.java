@@ -1,6 +1,10 @@
 package chess.pieces;
 
-public class Rook {
+import java.util.*;
+
+import chess.board.*;
+
+public class Rook extends Piece {
     public Rook(Alliance alliance, String imgPath) {
         super(alliance, imgPath);
     }

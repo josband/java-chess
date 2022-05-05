@@ -1,5 +1,7 @@
 package chess.board;
 
+import chess.pieces.Piece;
+
 public class Move {
     private Tile from;
     private Tile to;

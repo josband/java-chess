@@ -1,8 +1,8 @@
 package chess.pieces;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import chess.board.Tile;
+import chess.board.*;
 
 public final class Pawn extends Piece {
     private boolean enPassant; // For later implementation
@@ -11,7 +11,7 @@ public final class Pawn extends Piece {
     public Pawn(Alliance alliance, String imgPath) {
         super(alliance, imgPath);
         this.enPassant = false;
-        this.direction = this.alliance == Alliance.WHITE ? 1 : -1;
+        this.direction = (byte) (this.alliance == Alliance.WHITE ? 1 : -1);
     }
 
     public byte getDirection() {
@@ -35,24 +35,24 @@ public final class Pawn extends Piece {
         // Pawns can only move forward, unless there is a piece on a tile one diagonal 
         // away, in which case the pawn can capture the piece
         
-        if (board[y + this.direction][x].getPiece() == null) {
-            pawnMoves.add(new Move(start, board[y + this.direction][x]));
+        if (board.get(y + this.direction, x).getPiece() == null) {
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x)));
 
             // Pawns can move two spaces if they are on their starting row
-            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y = 7) 
-                && board[y + 2 * this.direction][x].getPiece() == null) {
-                pawnMoves.add(new Move(start, board[y + (2 * this.direction)][x]));
+            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y == 7) 
+                && board.get(y + 2 * this.direction, x).getPiece() == null) {
+                pawnMoves.add(new Move(start, board.get(y + 2 * this.direction, x)));
             }
         }
 
         // Pawns can only capture diagonally if there is a piece on the tile of a different alliance
         // Need to be careful of index out of bounds
-        if (x + 1 < 8 && board[y + this.direction][x + 1].isOccupied() && board[y + this.direction][x + 1].getPiece().getAlliance() != this.alliance) {
-            pawnMoves.add(new Move(start, board[y + this.direction][x + 1]));
+        if (x + 1 < 8 && board.get(y + this.direction, x + 1).isOccupied() && board.get(y + this.direction, x + 1).getPiece().getAlliance() != this.alliance) {
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x + 1)));
         }
-
-        if (x - 1 > -1 && board[y + this.direction][x - 1].isOccupied() && board[y + this.direction][x - 1].getPiece().getAlliance() != this.alliance) {
-            pawnMoves.add(new Move(start, board[y + this.direction][x - 1]));
+        
+        if (x - 1 > -1 && board.get(y + this.direction, x - 1).isOccupied() && board.get(y + this.direction, x - 1).getPiece().getAlliance() != this.alliance) {
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x - 1)));
         }
         
         return pawnMoves;

@@ -1,10 +1,13 @@
 package chess.pieces;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Queen {
+import chess.board.*;
+
+
+public class Queen extends Piece {
     public Queen(Alliance alliance, String imgPath) {
-        super(alliance);
+        super(alliance, imgPath);
     }
 
     public List<Move> calculateLegalMoves(Board board, Tile start) {
@@ -12,9 +15,11 @@ public class Queen {
 
         checkRankAndFile(queenMoves, board, start);
 
-        checkDiagnol(queenMoves, board, start, 1, 1);
-        checkDiagnol(queenMoves, board, start, 1, -1);
-        checkDiagnol(queenMoves, board, start, -1, -1);
-        checkDiagnol(queenMoves, board, start, -1, 1);
+        checkDiagonal(queenMoves, board, start, 1, 1);
+        checkDiagonal(queenMoves, board, start, 1, -1);
+        checkDiagonal(queenMoves, board, start, -1, -1);
+        checkDiagonal(queenMoves, board, start, -1, 1);
+
+        return queenMoves;
     }
 }

@@ -1,16 +1,15 @@
 package chess.pieces;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import chess.board.Board;
-import chess.board.Tile;
+import chess.board.*;
 
-public class Bishop {
+public class Bishop extends Piece {
     public Bishop(Alliance alliance, String imgPath) {
         super(alliance, imgPath);
     }
 
-    public List<Move> calculateLegalMoves(Board borad, Tile start) {
+    public List<Move> calculateLegalMoves(Board board, Tile start) {
         ArrayList<Move> bishopMoves = new ArrayList<Move>();
 
         // Bishops move diagonally but CANNOT jump pieces. Therefore, I must

@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.pieces.Piece;
+import chess.pieces.*;
 
 public class Board {
     Tile[][] board;
@@ -47,6 +47,10 @@ public class Board {
                     break;
             }
         }
+    }
+
+    public Tile get(int row, int col) {
+        return board[row][col];
     }
 
     public void clearBoard() {
