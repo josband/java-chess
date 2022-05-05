@@ -3,7 +3,7 @@ package chess.pieces;
 import java.util.ArrayList;
 
 public class Queen {
-    public Queen(Alliance alliance) {
+    public Queen(Alliance alliance, String imgPath) {
         super(alliance);
     }
 

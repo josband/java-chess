@@ -16,8 +16,8 @@ public class Knight {
     private static int[] deltaY = {2, 1, -1, -2, -2, -1, 1, 2};
     private static int[] deltaX = {1, 2, 2, 1, -1, -2, -2, -1};
 
-    public Knight(Alliance alliance) {
-        super(alliance); 
+    public Knight(Alliance alliance, String imgPath) {
+        super(alliance, imgPath); 
     }
 
     public List<Move> calculateLegalMoves(Board board, Tile start) {

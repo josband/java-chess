@@ -1,17 +1,20 @@
 package chess.pieces;
 
+import java.io.*;
 import chess.board.Board;
 import chess.board.Tile;
 
 // Maybe add checking the diagonals and horizontal movements to this class for the 
 // Queen, Rook, and Bishop to share through inheritance
 public abstract class Piece {
+    private BufferedImage img;
     private final Alliance alliance;
     private boolean dead;
 
-    public Piece(Alliance alliance) {
+    public Piece(Alliance alliance, String imgPath) {
         this.alliance = alliance;
         this.dead = false;
+        this.img = new BufferedImage(new File(imgPath));
     }
 
     public abstract List<Move> calculateLegalMoves(Board board, Tile start);

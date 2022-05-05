@@ -6,8 +6,8 @@ import chess.board.Board;
 import chess.board.Tile;
 
 public class Bishop {
-    public Bishop(Alliance alliance) {
-        super(alliance);
+    public Bishop(Alliance alliance, String imgPath) {
+        super(alliance, imgPath);
     }
 
     public List<Move> calculateLegalMoves(Board borad, Tile start) {

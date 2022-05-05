@@ -8,8 +8,8 @@ public final class Pawn extends Piece {
     private boolean enPassant; // For later implementation
     private byte direction;
 
-    public Pawn(Alliance alliance) {
-        super(alliance);
+    public Pawn(Alliance alliance, String imgPath) {
+        super(alliance, imgPath);
         this.enPassant = false;
         this.direction = this.alliance == Alliance.WHITE ? 1 : -1;
     }
