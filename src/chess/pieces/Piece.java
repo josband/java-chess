@@ -1,8 +1,12 @@
 package chess.pieces;
 
+import java.awt.image.*;
 import java.io.*;
-import chess.board.Board;
-import chess.board.Tile;
+import java.util.*;
+
+import javax.imageio.ImageIO;
+
+import chess.board.*;
 
 // Maybe add checking the diagonals and horizontal movements to this class for the 
 // Queen, Rook, and Bishop to share through inheritance
@@ -14,7 +18,10 @@ public abstract class Piece {
     public Piece(Alliance alliance, String imgPath) {
         this.alliance = alliance;
         this.dead = false;
-        this.img = new BufferedImage(new File(imgPath));
+        try {
+            this.img = ImageIO.read(new File(imgPath)); // Can read a image as a file using ImageIO
+        } catch (IOException e) {
+        }
     }
 
     public abstract List<Move> calculateLegalMoves(Board board, Tile start);
@@ -41,8 +48,8 @@ public abstract class Piece {
             currX += deltaX;
             currY += deltaY;
             try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board[currY][currX]));
+                if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
+                    moves.add(new Move(start, board.get(currY, currX)));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -61,8 +68,8 @@ public abstract class Piece {
         while (!done) {
             currX++;
             try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board[currY][currX]));
+                if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
+                    moves.add(new Move(start, board.get(currY, currX)));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -70,49 +77,49 @@ public abstract class Piece {
             }  
         }
 
-        done = false
+        done = false;
         currX = start.getX();
         // Check tiles apporaching file A
         while (!done) {
             currX--;
             try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board[currY][currX]));
+                if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
+                    moves.add(new Move(start, board.get(currY, currX)));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
-            }  
+            }      
         }
 
-        done = false
+        done = false;
         currX = start.getX();
         // Check tiles apporaching rank 8
         while (!done) {
             currY++;
             try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board[currY][currX]));
+                if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
+                    moves.add(new Move(start, board.get(currY, currX)));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
-            }  
+            }    
         }
 
-        done = false
+        done = false;
         currY = start.getY();
         // Check tiles apporaching rank 1
         while (!done) {
             currY--;
             try { 
-                if (!board[currY][currX].isOccupied() || board[currY][currX].getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board[currY][currX]));
+                if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
+                    moves.add(new Move(start, board.get(currY, currX)));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
-            }  
+            }    
         }
     }
 }
