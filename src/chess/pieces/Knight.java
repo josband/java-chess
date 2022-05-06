@@ -14,8 +14,8 @@ public class Knight extends Piece{
     private static int[] deltaY = {2, 1, -1, -2, -2, -1, 1, 2};
     private static int[] deltaX = {1, 2, 2, 1, -1, -2, -2, -1};
 
-    public Knight(Alliance alliance, String imgPath) {
-        super(alliance, imgPath); 
+    public Knight(Alliance alliance, String imgPath, Tile location) {
+        super(alliance, imgPath, location); 
     }
 
     public List<Move> calculateLegalMoves(Board board, Tile start) {

@@ -6,8 +6,8 @@ import chess.board.*;
 public class King extends Piece {
     private boolean inCheck;
 
-    public King(Alliance alliance, String imgPath) {
-        super(alliance, imgPath);
+    public King(Alliance alliance, String imgPath, Tile location) {
+        super(alliance, imgPath, location);
         inCheck = false;
     }
 

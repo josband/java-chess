@@ -6,8 +6,8 @@ import chess.board.*;
 
 
 public class Queen extends Piece {
-    public Queen(Alliance alliance, String imgPath) {
-        super(alliance, imgPath);
+    public Queen(Alliance alliance, String imgPath, Tile location) {
+        super(alliance, imgPath, location);
     }
 
     public List<Move> calculateLegalMoves(Board board, Tile start) {

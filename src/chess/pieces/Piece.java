@@ -3,7 +3,6 @@ package chess.pieces;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
-
 import javax.imageio.ImageIO;
 
 import chess.board.*;
@@ -12,12 +11,14 @@ import chess.board.*;
 // Queen, Rook, and Bishop to share through inheritance
 public abstract class Piece {
     private BufferedImage img;
+    protected Tile currLocation;
     protected final Alliance alliance;
     private boolean dead;
 
-    public Piece(Alliance alliance, String imgPath) {
+    public Piece(Alliance alliance, String imgPath, Tile location) {
         this.alliance = alliance;
         this.dead = false;
+        this.currLocation = location;
         try {
             this.img = ImageIO.read(new File(imgPath)); // Can read a image as a file using ImageIO
         } catch (IOException e) {

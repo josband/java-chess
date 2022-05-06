@@ -5,8 +5,8 @@ import java.util.*;
 import chess.board.*;
 
 public class Bishop extends Piece {
-    public Bishop(Alliance alliance, String imgPath) {
-        super(alliance, imgPath);
+    public Bishop(Alliance alliance, String imgPath, Tile location) {
+        super(alliance, imgPath, location);
     }
 
     public List<Move> calculateLegalMoves(Board board, Tile start) {
