@@ -34,7 +34,7 @@ public class Game {
             // For every one of the players pieces, I will calculate 'legal' moves even though some of them may not actually be legal
             // However I will be making a Check/Checkmate class that checks for this and will clean the list of moves
             for (Piece piece : playerPieces) {
-                playerMoves.add(piece.calculateLegalMoves(this.board, start)); // ERROR NEED TO ADD PART THAT HANDLES START ARGUMENMT
+                playerMoves.addAll(piece.calculateLegalMoves(this.board, piece.getLocation())); // ERROR NEED TO ADD PART THAT HANDLES START ARGUMENMT
             }
 
 

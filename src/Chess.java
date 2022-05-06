@@ -1,4 +1,3 @@
-import chess.*;
 import chess.gui.*;
 
 public class Chess {
