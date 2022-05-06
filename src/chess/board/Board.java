@@ -3,48 +3,59 @@ package chess.board;
 import chess.pieces.*;
 
 public class Board {
+    private static String imgRoot = "../pieces/piece PNGs/";
+    
     Tile[][] board;
     private static final int BOARD_SIZE = 8;
 
     public Board() {
         this.board = new Tile[BOARD_SIZE][BOARD_SIZE];
+        initializeBoard();
         setBoard();
     }
 
     // Sets up the board for a new game
     private void setBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
-            board[1][i] = new Pawn(); 
-            board[6][i] = new Pawn();
+            board[1][i].setPiece(new Pawn(Alliance.WHITE, imgRoot + "PWhite.png")); 
+            board[6][i].setPiece(new Pawn(Alliance.BLACK, imgRoot + "PBlack.png"));
 
             // Need to set constructors properly
             switch (i) {
                 case 0:
-                    board[0][i] = new Rook();
-                    board[0][BOARD_SIZE - 1 - i] = new Rook();
-                    board[7][i] = new Rook();
-                    board[0][BOARD_SIZE - 1 - i] = new Rook();
+                    board[0][i].setPiece(new Rook(Alliance.WHITE, imgRoot +  "RWhite.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.WHITE, imgRoot +  "RWhite.png"));
+                    board[7][i].setPiece(new Rook(Alliance.BLACK, imgRoot +  "RBlack.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.BLACK, imgRoot +  "RBlack.png"));
                     break;
                 case 1:
-                    board[0][i] = new Knight();
-                    board[0][BOARD_SIZE - 1 - i] = new Knight();
-                    board[7][i] = new Knight();
-                    board[0][BOARD_SIZE - 1 - i] = new Knight();
+                    board[0][i].setPiece(new Knight(Alliance.WHITE, imgRoot +  "NWhite.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.WHITE, imgRoot +  "NWhite.png"));
+                    board[7][i].setPiece(new Knight(Alliance.BLACK, imgRoot +  "NBlack.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.BLACK, imgRoot +  "NBlack.png"));
                     break;
                 case 2:
-                    board[0][i] = new Bishop();
-                    board[0][BOARD_SIZE - 1 - i] = new Bishop();
-                    board[7][i] = new Bishop();
-                    board[0][BOARD_SIZE - 1 - i] = new Bishop();
+                    board[0][i].setPiece(new Bishop(Alliance.WHITE, imgRoot +  "BWhite.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.WHITE, imgRoot +  "BWhite.png"));
+                    board[7][i].setPiece(new Bishop(Alliance.BLACK, imgRoot +  "BBlack.png"));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.BLACK, imgRoot +  "BBlack.png"));
                     break;
                 case 3:
-                    board[0][i] = new Queen();
-                    board[7][i] = new Queen();
+                    board[0][i].setPiece(new Queen(Alliance.WHITE, imgRoot +  "QWhite.png"));
+                    board[7][i].setPiece(new Queen(Alliance.BLACK, imgRoot +  "QBlack.png"));
                     break;
                 case 4:
-                    board[0][i] = new King();
-                    board[7][i] = new King();
+                    board[0][i].setPiece(new King(Alliance.WHITE, imgRoot +  "KWhite.png"));
+                    board[7][i].setPiece(new King(Alliance.BLACK, imgRoot +  "KBlack.png"));
                     break;
+            }
+        }
+    }
+
+    private void initializeBoard() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                board[i][j] = new Tile(j, i);
             }
         }
     }
