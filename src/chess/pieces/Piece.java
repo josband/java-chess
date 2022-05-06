@@ -39,6 +39,16 @@ public abstract class Piece {
         return alliance;
     }
 
+    public Tile getLocation() {
+        return this.currLocation;
+    }
+
+    public void setLocation(Tile location) {
+        if (location != null) {
+            this.currLocation = location;
+        }
+    }
+
     // USAGE FOR: Bishop and Queen
     protected void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
         int currX = start.getX();
