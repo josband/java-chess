@@ -26,6 +26,7 @@ public final class Pawn extends Piece {
         this.enPassant = true;
     }
 
+    @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         List<Move> pawnMoves = new ArrayList<Move>(); // Replace with hashmap for better performance
         

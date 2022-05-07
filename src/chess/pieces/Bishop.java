@@ -9,6 +9,7 @@ public class Bishop extends Piece {
         super(alliance, imgPath, location);
     }
 
+    @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         ArrayList<Move> bishopMoves = new ArrayList<Move>();
 

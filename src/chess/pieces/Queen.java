@@ -10,6 +10,7 @@ public class Queen extends Piece {
         super(alliance, imgPath, location);
     }
 
+    @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         List<Move> queenMoves = new ArrayList<Move>();
 

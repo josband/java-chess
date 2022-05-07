@@ -19,6 +19,7 @@ public class King extends Piece {
         return this.inCheck;
     }
 
+    @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         List<Move> kingMoves = new ArrayList<Move>();
         int kingX, kingY;
