@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.imageio.ImageIO;
