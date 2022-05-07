@@ -1,10 +1,10 @@
 package chess.gui;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 // New Territory, will implement when there is more functionality
 public class GameFrame extends JFrame {  
