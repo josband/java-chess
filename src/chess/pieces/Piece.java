@@ -49,6 +49,10 @@ public abstract class Piece {
         }
     }
 
+    public BufferedImage Image() {
+        return this.img;
+    }
+
     // USAGE FOR: Bishop and Queen
     protected void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
         int currX = start.getX();

@@ -19,4 +19,8 @@ public class Move {
     public Tile getTo() {
         return to;
     }
+
+    public Piece pieceMoved() {
+        return this.piece;
+    }
 }
