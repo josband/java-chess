@@ -1,16 +1,14 @@
 package chess.pieces;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.util.*;
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import chess.board.*;
 
 // Maybe add checking the diagonals and horizontal movements to this class for the 
 // Queen, Rook, and Bishop to share through inheritance
 public abstract class Piece {
-    private BufferedImage img;
+    private ImageIcon img;
     protected Tile currLocation;
     protected final Alliance alliance;
     private boolean dead;
@@ -19,10 +17,7 @@ public abstract class Piece {
         this.alliance = alliance;
         this.dead = false;
         this.currLocation = location;
-        try {
-            this.img = ImageIO.read(new File(imgPath)); // Can read a image as a file using ImageIO
-        } catch (IOException e) {
-        }
+        this.img = new ImageIcon(imgPath);
     }
 
     public abstract List<Move> calculateLegalMoves(Board board, Tile start);
@@ -49,7 +44,7 @@ public abstract class Piece {
         }
     }
 
-    public BufferedImage Image() {
+    public ImageIcon Image() {
         return this.img;
     }
 
