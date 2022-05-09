@@ -29,14 +29,14 @@ public class King extends Piece {
 
         for (int i = -1; i < 2; i++) {
             try {
-                if (board.get(kingY + 1, kingX + i).getPiece() == null || board.get(kingY + 1, kingX + i).getPiece().getAlliance() != this.alliance) {
+                if (!board.get(kingY + 1, kingX + i).isOccupied() || board.get(kingY + 1, kingX + i).getPiece().getAlliance() != this.alliance) {
                     kingMoves.add(new Move(start, board.get(kingY + 1, kingX + i)));
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
 
             try {
-                if (board.get(kingY - 1, kingX + i).getPiece() == null || board.get(kingY - 1, kingX + i).getPiece().getAlliance() != this.alliance) {
+                if (!board.get(kingY - 1, kingX + i).isOccupied() || board.get(kingY - 1, kingX + i).getPiece().getAlliance() != this.alliance) {
                     kingMoves.add(new Move(start, board.get(kingY - 1, kingX + i)));
                 }
             } catch (ArrayIndexOutOfBoundsException e) {      

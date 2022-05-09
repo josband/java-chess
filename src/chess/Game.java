@@ -6,7 +6,7 @@ import chess.board.*;
 import chess.player.*;
 import chess.pieces.*;
 
-// THIS WILL BE IMPLEMENTED BEFORE LAST
+// THIS WILL BE IMPLEMENTED FULLY NEAR THE END OF DEVELOPMENT
 public class Game {
     private Player whitePlayer;
     private Player blackPlayer;
@@ -15,6 +15,7 @@ public class Game {
     private Board board;
     private boolean whiteTurn;
 
+    @SuppressWarnings("unused")
     public Game() {
         whitePlayer = new Player(Alliance.WHITE);
         blackPlayer = new Player(Alliance.BLACK);
@@ -27,6 +28,8 @@ public class Game {
     public void run() {
         List<Piece> playerPieces;
         List<Move> playerMoves;
+
+        // Will replace condition with our checkmate checker method
         while (true) {
             playerPieces = whiteTurn ? this.whitePlayer.getPieces() : this.blackPlayer.getPieces();
             playerMoves = whiteTurn ? this.whiteMoves : this.blackMoves;
@@ -37,8 +40,9 @@ public class Game {
                 playerMoves.addAll(piece.calculateLegalMoves(this.board, piece.getLocation())); // ERROR NEED TO ADD PART THAT HANDLES START ARGUMENMT
             }
 
-
-
+            // DO THE MOVE: TO BE IMPLEMENTED
+            // DO THE MOVE: TO BE IMPLEMENTED
+            // DO THE MOVE: TO BE IMPLEMENTED
 
             playerMoves.clear();
             whiteTurn = !whiteTurn;
