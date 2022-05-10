@@ -15,14 +15,13 @@ public class Game {
     private Board board;
     private boolean whiteTurn;
 
-    @SuppressWarnings("unused")
     public Game() {
-        whitePlayer = new Player(Alliance.WHITE);
-        blackPlayer = new Player(Alliance.BLACK);
-        whiteMoves = new ArrayList<Move>();
-        blackMoves = new ArrayList<Move>();
-        Board board = new Board();
-        whiteTurn = true;
+        this.whitePlayer = new Player(Alliance.WHITE);
+        this.blackPlayer = new Player(Alliance.BLACK);
+        this.whiteMoves = new ArrayList<Move>();
+        this.blackMoves = new ArrayList<Move>();
+        this.board = new Board();
+        this.whiteTurn = true;
     }
 
     public void run() {
@@ -47,5 +46,9 @@ public class Game {
             playerMoves.clear();
             whiteTurn = !whiteTurn;
         }
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 }
