@@ -12,6 +12,7 @@ public abstract class Piece {
     protected Tile currLocation;
     protected final Alliance alliance;
     private boolean dead;
+    protected int hashValue;
 
     public Piece(Alliance alliance, String imgPath, Tile location) {
         this.alliance = alliance;
@@ -32,6 +33,10 @@ public abstract class Piece {
 
     public Alliance getAlliance() {
         return alliance;
+    }
+
+    public int getValue() {
+        return hashValue;
     }
 
     public Tile getLocation() {

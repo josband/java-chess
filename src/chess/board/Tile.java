@@ -44,4 +44,12 @@ public class Tile {
         this.piece = null;
         return removedPiece;
     }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * this.x;
+        result = result + 41 * this.y;
+        result *= this.piece.getValue();
+        return result;
+    }
 }

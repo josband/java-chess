@@ -12,6 +12,7 @@ public final class Pawn extends Piece {
         super(alliance, imgPath, location);
         this.enPassant = false;
         this.direction = (byte) (this.alliance == Alliance.WHITE ? 1 : -1);
+        this.hashValue = 1;
     }
 
     public byte getDirection() {

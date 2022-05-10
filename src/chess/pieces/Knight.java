@@ -16,6 +16,7 @@ public class Knight extends Piece{
 
     public Knight(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location); 
+        this.hashValue = 2;
     }
 
     @Override

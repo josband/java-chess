@@ -8,7 +8,8 @@ public class King extends Piece {
 
     public King(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
-        inCheck = false;
+        this.inCheck = false;
+        this.hashValue = 9;
     }
 
     public boolean setCheck(boolean check) {

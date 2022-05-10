@@ -43,7 +43,7 @@ The GUI will be just the visualization of the game of these interacting componen
 - Reference to the Kings
 - Needs to be able to check the moves
 - Needs to be able to tell "Is this Tile attacked?" 
-  - Can hash all the moves in the enemy move list to a tile
+  - Can hash all tile destinations of a move (don't need to worry about having many moves to the same destination because if there is a move to that tile it doesn't matter where)
   - In check if there is a move hashed to the tile
     - Can also be useful for checking if a tile is safe when moving
   - For pins:

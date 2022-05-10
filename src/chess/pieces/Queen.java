@@ -8,6 +8,7 @@ import chess.board.*;
 public class Queen extends Piece {
     public Queen(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
+        this.hashValue = 7;
     }
 
     @Override

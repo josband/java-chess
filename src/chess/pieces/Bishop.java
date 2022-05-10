@@ -7,6 +7,7 @@ import chess.board.*;
 public class Bishop extends Piece {
     public Bishop(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
+        this.hashValue = 3; 
     }
 
     @Override

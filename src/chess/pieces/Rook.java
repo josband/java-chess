@@ -7,6 +7,7 @@ import chess.board.*;
 public class Rook extends Piece {
     public Rook(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
+        this.hashValue = 5;
     }
 
     @Override
