@@ -16,11 +16,11 @@ public class Game {
     private boolean whiteTurn;
 
     public Game() {
-        this.whitePlayer = new Player(Alliance.WHITE);
-        this.blackPlayer = new Player(Alliance.BLACK);
         this.whiteMoves = new ArrayList<Move>();
         this.blackMoves = new ArrayList<Move>();
         this.board = new Board();
+        this.whitePlayer = new Player(Alliance.WHITE, this.board);
+        this.blackPlayer = new Player(Alliance.BLACK, this.board);
         this.whiteTurn = true;
     }
 
