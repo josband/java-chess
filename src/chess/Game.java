@@ -28,6 +28,7 @@ public class Game {
         List<Piece> playerPieces;
         List<Move> playerMoves;
 
+        // ALL HYPOTHETICAL, DEPENDS ON OTHER IMPLEMENTATIONS
         // Will replace condition with our checkmate checker method
         while (true) {
             playerPieces = whiteTurn ? this.whitePlayer.getPieces() : this.blackPlayer.getPieces();

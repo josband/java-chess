@@ -38,6 +38,18 @@ The GUI will be just the visualization of the game of these interacting componen
 - To coordinate/tile
 - *Later* maybe check move
 
+**Board Manager**
+- Needs the board itself
+- Reference to the Kings
+- Needs to be able to check the moves
+- Needs to be able to tell "Is this Tile attacked?" 
+  - Can hash all the moves in the enemy move list to a tile
+  - In check if there is a move hashed to the tile
+    - Can also be useful for checking if a tile is safe when moving
+  - For pins:
+    - Have a testMove(Move) method that will execute a move temporarily to obtain the new postion and then check all views from the King to see if it is now under attack
+      - could make more efficient by finding a way to find if it is even possible to be pinned
+
 **Aliances**
 
 This will just be an enum so not much functionality for this but should be noted
