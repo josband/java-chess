@@ -23,4 +23,9 @@ public class Move {
     public Piece pieceMoved() {
         return this.piece;
     }
+
+    @Override
+    public int hashCode() {
+        return piece.getValue() * (this.from.hashCode() + this.to.hashCode());
+    }
 }
