@@ -35,6 +35,13 @@ public class King extends Piece {
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+            
+            try {
+                if (i != 0 && (!board.get(kingY, kingX + i).isOccupied() || board.get(kingY, kingX + i).getPiece().getAlliance() != this.alliance)) {
+                    kingMoves.add(new Move(start, board.get(kingY + 1, kingX + i)));
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
 
             try {
                 if (!board.get(kingY - 1, kingX + i).isOccupied() || board.get(kingY - 1, kingX + i).getPiece().getAlliance() != this.alliance) {
