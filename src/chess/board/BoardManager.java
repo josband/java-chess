@@ -12,7 +12,15 @@ public class BoardManager {
     private List<Move> blackMoves;
     private HashMap<Tile, Move> attackMap;
 
-    // TODO: add the king references
+    /**
+     * Creates an Object responsible for overviewing a board of pieces for the chess game. It is utilized
+     * in checking whether tiles are attacked by enemy pieces, a player is in check, or a player has been mated.
+     * @param board The board in which the game is occurring
+     * @param whiteMoves The list of moves being used for white
+     * @param blackMoves The list of moves being used for black
+     * @param black The black player
+     * @param white The white player
+     */
     public BoardManager(Board board, List<Move> whiteMoves, List<Move> blackMoves, Player black, Player white) {
         this.board = board;
         this.attackMap = new HashMap<Tile, Move>();
