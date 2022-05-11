@@ -14,6 +14,7 @@ public class Game {
     private List<Move> blackMoves;
     private Board board;
     private boolean whiteTurn;
+    private BoardManager manager;
 
     public Game() {
         this.whiteMoves = new ArrayList<Move>();
@@ -21,6 +22,7 @@ public class Game {
         this.board = new Board();
         this.whitePlayer = new Player(Alliance.WHITE, this.board);
         this.blackPlayer = new Player(Alliance.BLACK, this.board);
+        this.manager = new BoardManager(board, whiteMoves, blackMoves, blackPlayer, whitePlayer);
         this.whiteTurn = true;
     }
 
@@ -30,7 +32,7 @@ public class Game {
 
         // ALL HYPOTHETICAL, DEPENDS ON OTHER IMPLEMENTATIONS
         // Will replace condition with our checkmate checker method
-        while (true) {
+        while (!manager.isMated(blackPlayer) && !manager.isMated(whitePlayer)) {
             playerPieces = whiteTurn ? this.whitePlayer.getPieces() : this.blackPlayer.getPieces();
             playerMoves = whiteTurn ? this.whiteMoves : this.blackMoves;
 

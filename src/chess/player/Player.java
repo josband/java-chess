@@ -39,9 +39,15 @@ public class Player {
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                this.pieces.add(board.get(6, i).getPiece());
                 this.pieces.add(board.get(7, i).getPiece());
+                this.pieces.add(board.get(6, i).getPiece());
             }
         }
+    }
+
+    public King getKing() {
+        assert pieces.get(8) instanceof King;
+        
+        return (King) pieces.get(8);
     }
 }
