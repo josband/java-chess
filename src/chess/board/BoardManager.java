@@ -110,4 +110,34 @@ public class BoardManager {
             attackMap.put(move.getTo(), move);
         }
     }
+
+    public List<Move> addCastlingMoves(Rook rook, List<Move> rookMoves) {
+        updateAttackMap(rook.getAlliance());
+        int x = rook.getLocation().getX();
+        int y = rook.getLocation().getY();
+        Alliance alliance = rook.getAlliance();
+
+        if (rook.getAlliance() == Alliance.WHITE && !whiteKing.hasMoved() && !rook.hasMoved() && !isTileAttacked(alliance, whiteKing.getLocation())) {
+            if (x == 0) {
+                // Need to check 3 tiles 
+                if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))
+                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x + 3), rook, new Move(whiteKing.getLocation(), board.get(y, x + 2), whiteKing)));
+            } else {
+                // just 2 tiles
+                if (!isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2)))
+                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x - 2), rook, new Move(whiteKing.getLocation(), board.get(y, x -1), whiteKing)));
+            }
+        } else if (rook.getAlliance() == Alliance.BLACK && !blackKing.hasMoved() && !rook.hasMoved() && !isTileAttacked(alliance, blackKing.getLocation())) {
+            if (x == 0) {
+                // Need to check 3 tiles 
+                if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))
+                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x + 3), rook, new Move(blackKing.getLocation(), board.get(y, x + 2), whiteKing)));
+            } else {
+                // just 2 tiles
+                if (!isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2)))
+                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x - 2), rook, new Move(blackKing.getLocation(), board.get(y, x -1), whiteKing)));
+            }
+        }
+        return rookMoves;
+    }
 }

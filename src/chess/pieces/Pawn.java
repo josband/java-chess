@@ -59,7 +59,7 @@ public final class Pawn extends Piece {
             }
         } catch (ArrayIndexOutOfBoundsException e) {}
 
-        // En Passant
+        // En Passant NEEDS TO BE REVIEWED
         
         if (y == 3 && this.alliance == Alliance.WHITE) {
             try {
@@ -82,10 +82,7 @@ public final class Pawn extends Piece {
                 if (board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
                 pawnMoves.add(new Move(start, board.get(y - 1, x - 1), this));
             } catch (ArrayIndexOutOfBoundsException e) {}
-            
         }
-        
-        
         return pawnMoves;
     }
 }
