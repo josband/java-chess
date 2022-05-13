@@ -6,7 +6,7 @@ import chess.board.*;
 import chess.player.*;
 import chess.pieces.*;
 
-// THIS WILL BE IMPLEMENTED FULLY NEAR THE END OF DEVELOPMENT
+// A container just for all of our components
 public class Game {
     private Player whitePlayer;
     private Player blackPlayer;

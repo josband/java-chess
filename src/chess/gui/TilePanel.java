@@ -12,6 +12,9 @@ public class TilePanel extends JPanel {
     private int x;
     private int y;
 
+    private static final Color WHITE_COLOR = new Color(0xFFFBF1);
+    private static final Color BLACK_COLOR = new Color(0x1234567);
+
     // Will need a JLabel of the piece Image Icon that will be centered
     public TilePanel(Tile tile) {
         super(new GridBagLayout());
@@ -25,7 +28,7 @@ public class TilePanel extends JPanel {
             label.setIcon(tile.getPiece().Image());
             label.setLayout(null);
             label.setHorizontalAlignment(JLabel.CENTER);
-            label.setVerticalAlignment(JLabel.BOTTOM);;
+            label.setVerticalAlignment(JLabel.CENTER);;
         }
         
         this.add(label);
@@ -35,9 +38,9 @@ public class TilePanel extends JPanel {
 
     private void setColor() {
         if ((x + y) % 2 == 0) {
-            this.setBackground(new Color(0xFFFBF1));
+            this.setBackground(WHITE_COLOR);
         } else {
-            this.setBackground(new Color(0x1234567));
+            this.setBackground(BLACK_COLOR);
         }
     }
 
