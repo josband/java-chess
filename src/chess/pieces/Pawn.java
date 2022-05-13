@@ -38,24 +38,53 @@ public final class Pawn extends Piece {
         // away, in which case the pawn can capture the piece
         
         if (board.get(y + this.direction, x).getPiece() == null) {
-            pawnMoves.add(new Move(start, board.get(y + this.direction, x)));
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x), this));
 
             // Pawns can move two spaces if they are on their starting row
-            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y == 7) 
+            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y == 6) 
                 && board.get(y + 2 * this.direction, x).getPiece() == null) {
-                pawnMoves.add(new Move(start, board.get(y + 2 * this.direction, x)));
+                pawnMoves.add(new Move(start, board.get(y + 2 * this.direction, x), this));
             }
         }
 
         // Pawns can only capture diagonally if there is a piece on the tile of a different alliance
         // Need to be careful of index out of bounds
-        if (x + 1 < 8 && board.get(y + this.direction, x + 1).isOccupied() && board.get(y + this.direction, x + 1).getPiece().getAlliance() != this.alliance) {
-            pawnMoves.add(new Move(start, board.get(y + this.direction, x + 1)));
+        try {
+            if (x + 1 < 8 && board.get(y + this.direction, x + 1).isOccupied() && board.get(y + this.direction, x + 1).getPiece().getAlliance() != this.alliance) {
+                pawnMoves.add(new Move(start, board.get(y + this.direction, x + 1), this));
+            }
+            
+            if (x - 1 > -1 && board.get(y + this.direction, x - 1).isOccupied() && board.get(y + this.direction, x - 1).getPiece().getAlliance() != this.alliance) {
+                pawnMoves.add(new Move(start, board.get(y + this.direction, x - 1), this));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {}
+
+        // En Passant
+        
+        if (y == 3 && this.alliance == Alliance.WHITE) {
+            try {
+                if (board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y + 1, x + 1), this));
+            } catch (ArrayIndexOutOfBoundsException e) {}
+            
+            try {
+                if (board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
+                    pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
+            } catch (ArrayIndexOutOfBoundsException e) {}
+            
+        } else if (y == 4 && this.alliance == Alliance.BLACK) {
+            try {
+                if (board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y - 1, x + 1), this));
+            } catch (ArrayIndexOutOfBoundsException e) {}
+            
+            try {
+                if (board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y - 1, x - 1), this));
+            } catch (ArrayIndexOutOfBoundsException e) {}
+            
         }
         
-        if (x - 1 > -1 && board.get(y + this.direction, x - 1).isOccupied() && board.get(y + this.direction, x - 1).getPiece().getAlliance() != this.alliance) {
-            pawnMoves.add(new Move(start, board.get(y + this.direction, x - 1)));
-        }
         
         return pawnMoves;
     }

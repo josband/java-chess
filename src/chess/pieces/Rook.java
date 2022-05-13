@@ -14,7 +14,10 @@ public class Rook extends Piece {
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         ArrayList<Move> rookMoves = new ArrayList<Move>();
 
+        // Check 'standard rook move'
         checkRankAndFile(rookMoves, board, start);
+
+        // Check Castling moves
         
         return rookMoves;
     }

@@ -64,7 +64,7 @@ public abstract class Piece {
             currY += deltaY;
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board.get(currY, currX)));
+                    moves.add(new Move(start, board.get(currY, currX), this));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -84,7 +84,7 @@ public abstract class Piece {
             currX++;
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board.get(currY, currX)));
+                    moves.add(new Move(start, board.get(currY, currX), this));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -99,7 +99,7 @@ public abstract class Piece {
             currX--;
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board.get(currY, currX)));
+                    moves.add(new Move(start, board.get(currY, currX), this));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -114,7 +114,7 @@ public abstract class Piece {
             currY++;
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board.get(currY, currX)));
+                    moves.add(new Move(start, board.get(currY, currX), this));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -129,7 +129,7 @@ public abstract class Piece {
             currY--;
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
-                    moves.add(new Move(start, board.get(currY, currX)));
+                    moves.add(new Move(start, board.get(currY, currX), this));
                     done = true;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {

@@ -76,13 +76,12 @@ public class BoardManager {
                     if (!isTileAttacked(king.getAlliance(), board.get(kingY - 1, kingX + i))) {
                        return false; 
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {      
+                } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
             
             return true;
         }
-        
     }
 
     /**

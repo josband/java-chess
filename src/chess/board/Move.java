@@ -7,9 +7,10 @@ public class Move {
     private Tile to;
     private Piece piece; // Maybe to removing pieces. I can know what the piece is or hashing a move
 
-    public Move(Tile from, Tile to) {
+    public Move(Tile from, Tile to, Piece piece) {
         this.from = from;
         this.to = to;
+        this.piece = piece;
     }
 
     public Tile getFrom() {
