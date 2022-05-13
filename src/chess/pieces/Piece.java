@@ -53,6 +53,10 @@ public abstract class Piece {
         return this.img;
     }
 
+    public void perfromMove(Move move) {
+        
+    }
+
     // USAGE FOR: Bishop and Queen
     protected void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
         int currX = start.getX();

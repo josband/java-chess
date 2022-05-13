@@ -8,26 +8,23 @@ import chess.board.Board;
 // New Territory, will implement when there is more functionality
 public class GameFrame extends JFrame {
     private Game game;
+    private final BoardPanel boardPanel;
     
     public GameFrame() {
         this.game = new Game();
         setTitle("Chess");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.DARK_GRAY);
-        setIconImage((new ImageIcon("./src/chess/pieces/piece PNGs/bN.png")).getImage());
+        getContentPane().setPreferredSize(new Dimension(640, 640));;
+        setIconImage((new ImageIcon("./src/chess/pieces/piece PNGs/black-knight.png")).getImage());
         setLayout(null);
         setResizable(true);
 
-        Board board = this.game.getBoard();
-        for(int row = 0; row < 8; row++) {
-            for(int col = 0; col < 8; col++) {
-                TilePanel tile = new TilePanel(board.get(row, col));
-                add(tile);
-            }
-        }
+        this.boardPanel = new BoardPanel(game.getBoard());
 
-        setSize(720, 720);
-        // pack();
+        this.add(boardPanel);
+
+        pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
