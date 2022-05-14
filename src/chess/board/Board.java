@@ -72,4 +72,13 @@ public class Board {
             }
         }
     }
+
+    public void executeMove(Move move) {
+        Tile source = move.getFrom();
+        Tile destination = move.getTo();
+        Piece movedPiece = move.getMovedPiece();
+
+        source.setPiece(null);
+        destination.setPiece(movedPiece);
+    }
 }

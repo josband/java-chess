@@ -8,14 +8,14 @@ import chess.pieces.*;
 
 // A container just for all of our components
 public class Game {
-    private Player whitePlayer;
-    private Player blackPlayer;
+    private final Player whitePlayer;
+    private final Player blackPlayer;
     private List<Move> whiteMoves;
     private List<Move> blackMoves;
     private Move lastMove;
-    private Board board;
+    private final Board board;
     private boolean whiteTurn;
-    private BoardManager manager;
+    private final BoardManager manager;
 
     public Game() {
         this.whiteMoves = new ArrayList<Move>();
@@ -55,5 +55,13 @@ public class Game {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public Move getLastMove() {
+        return this.lastMove;
+    }
+
+    public void setLastMove(Move move) {
+        this.lastMove = move; // May also want to add something that will just change the content of the move
     }
 }
