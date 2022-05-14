@@ -117,7 +117,7 @@ public class GameFrame extends JFrame {
                             // First click
                             sourceTile = tile;
                             humanMovedPiece = sourceTile.getPiece();
-                            if (humanMovedPiece == null) {
+                            if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn()) {
                                 sourceTile = null;
                             }
                         } else {
