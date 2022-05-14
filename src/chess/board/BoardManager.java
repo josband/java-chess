@@ -5,12 +5,12 @@ import chess.pieces.*;
 import chess.player.*;
 
 public class BoardManager {
-    private Board board;
-    private King blackKing;
-    private King whiteKing;
-    private List<Move> whiteMoves;
-    private List<Move> blackMoves;
-    private HashMap<Tile, Move> attackMap;
+    private final Board board;
+    private final King blackKing;
+    private final King whiteKing;
+    private final List<Move> whiteMoves;
+    private final List<Move> blackMoves;
+    private final HashMap<Tile, Move> attackMap;
 
     /**
      * Creates an Object responsible for overviewing a board of pieces for the chess game. It is utilized
@@ -32,10 +32,10 @@ public class BoardManager {
 
     /**
      * Determines if a player's king is in check
-     * @param player The player to be evaluated whether or not is in check
+     * @param alliance The alliance to be evaluated whether or not is in check
      */
-    public boolean isChecked(Player player) {
-        King king = player.getAlliance() == Alliance.WHITE ? whiteKing : blackKing;
+    public boolean isChecked(Alliance alliance) {
+        King king = alliance == Alliance.WHITE ? whiteKing : blackKing;
         int x = king.getLocation().getX();
         int y = king.getLocation().getY();
 
@@ -44,13 +44,13 @@ public class BoardManager {
 
     /**
      * Determines if a player's king is mated
-     * @param player The player to be evaluated whether or not is mated
+     * @param alliance The alliance to be evaluated whether or not is mated
      */
-    public boolean isMated(Player player) {
-        if (!isChecked(player)) 
+    public boolean isMated(Alliance alliance) {
+        if (!isChecked(alliance)) 
             return false;
         else {
-            King king = player.getAlliance() == Alliance.WHITE ? whiteKing : blackKing;
+            King king = alliance == Alliance.WHITE ? whiteKing : blackKing;
             int kingX = king.getLocation().getX();
             int kingY = king.getLocation().getY();
 

@@ -39,7 +39,7 @@ public class GameFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(640, 640));;
         setIconImage((new ImageIcon("./src/chess/pieces/piece PNGs/black-knight.png")).getImage());
         setLayout(null);
-        setResizable(true);
+        setResizable(false);
 
         this.boardPanel = new BoardPanel();
 
@@ -49,6 +49,8 @@ public class GameFrame extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+// *************************************************************************************************************************************************************
 
     private class BoardPanel extends JPanel {
         List<TilePanel> boardTiles;
@@ -73,7 +75,7 @@ public class GameFrame extends JFrame {
 
         public void drawBoard(Board board) {
             removeAll();
-            for(TilePanel tilePanel : boardTiles) {
+            for (TilePanel tilePanel : boardTiles) {
                 tilePanel.drawTile(board);
                 add(tilePanel);
             }
@@ -82,6 +84,8 @@ public class GameFrame extends JFrame {
         }
     }
 
+// *************************************************************************************************************************************************************
+
     private class TilePanel extends JPanel {
         private Tile tile;
         private int x;
@@ -89,6 +93,7 @@ public class GameFrame extends JFrame {
     
         private static final Color WHITE_COLOR = new Color(0xFFFBF1);
         private static final Color BLACK_COLOR = new Color(0x1234567);
+        private static final JLabel BLUE_DOT = new JLabel(new ImageIcon("./src/chess/pieces/piece PNGs/blue-dot.png"));
     
         // Will need a JLabel of the piece Image Icon that will be centered
         public TilePanel(Tile tile) {
@@ -120,6 +125,7 @@ public class GameFrame extends JFrame {
                             destinationTile = tile;
                             Move move = new Move(sourceTile, destinationTile, humanMovedPiece);
                             board.executeMove(move);
+                            game.endTurn();
                             sourceTile = null;
                             destinationTile = null;
                             humanMovedPiece = null;
@@ -173,8 +179,26 @@ public class GameFrame extends JFrame {
         public void drawTile(Board board) {
             setColor();
             assignTilePiece();
+            highlightLegalMoves(board);
             validate();
             repaint();
+        }
+
+        private void highlightLegalMoves(Board board) {
+            if (true) { // In case I want this to be an option later on
+                for (Move move : pieceLegalMoves(board)) {
+                    if (move.getTo() == this.tile) {
+                        add(BLUE_DOT);
+                    }
+                }
+            }
+        }
+
+        private List<Move> pieceLegalMoves(Board board) {
+            if (humanMovedPiece != null && humanMovedPiece.getAlliance() == game.getTurn()) {
+                return humanMovedPiece.calculateLegalMoves(board, sourceTile);
+            }
+            return Collections.emptyList();
         }
     
         private void setColor() {
