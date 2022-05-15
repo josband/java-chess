@@ -4,7 +4,7 @@ import java.util.*;
 import chess.board.*;
 
 public class King extends Piece {
-    private boolean moved;
+    private boolean moved; // Change to firstMove
 
     public King(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);

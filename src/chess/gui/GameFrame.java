@@ -126,15 +126,21 @@ public class GameFrame extends JFrame {
                             }
                         } else {
                             // Second click
-                            destinationTile = tile;
-                            Move move = new Move(sourceTile, destinationTile, humanMovedPiece);
-                            board.executeMove(move);
-                            game.endTurn();
-                            sourceTile = null;
-                            destinationTile = null;
-                            humanMovedPiece = null;
-                            // FILL IN WITH ACTUALLY DOING THE MOVE
-                            // maybe make a method in game that preps all of the game data
+                            if (tile == sourceTile) {
+                                sourceTile = null;
+                                humanMovedPiece = null;
+                            } else {
+                                destinationTile = tile;
+                                Move move = new Move(sourceTile, destinationTile, humanMovedPiece);
+                                board.executeMove(move);
+                                game.endTurn();
+                                sourceTile = null;
+                                destinationTile = null;
+                                humanMovedPiece = null;
+                                // FILL IN WITH ACTUALLY DOING THE MOVE
+                                // maybe make a method in game that preps all of the game data
+                            }
+                            
                         }
                     }
                     SwingUtilities.invokeLater(new Runnable() {

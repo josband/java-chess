@@ -111,13 +111,13 @@ public class BoardManager {
         }
     }
 
-    public List<Move> addCastlingMoves(Rook rook, List<Move> rookMoves) {
+    public List<Move> addCastlingMoves(Rook rook, List<Move> rookMoves) { // Change over so that it is part of king's call
         updateAttackMap(rook.getAlliance());
         int x = rook.getLocation().getX();
         int y = rook.getLocation().getY();
         Alliance alliance = rook.getAlliance();
 
-        if (rook.getAlliance() == Alliance.WHITE && !whiteKing.hasMoved() && !rook.hasMoved() && !isTileAttacked(alliance, whiteKing.getLocation())) {
+        if (rook.getAlliance() == Alliance.WHITE && !whiteKing.hasMoved() && rook.firstMove() && !isChecked(alliance)) {
             if (x == 0) {
                 // Need to check 3 tiles 
                 if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))
@@ -127,7 +127,7 @@ public class BoardManager {
                 if (!isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2)))
                     rookMoves.add(new Move(rook.getLocation(), board.get(y, x - 2), rook, new Move(whiteKing.getLocation(), board.get(y, x -1), whiteKing)));
             }
-        } else if (rook.getAlliance() == Alliance.BLACK && !blackKing.hasMoved() && !rook.hasMoved() && !isTileAttacked(alliance, blackKing.getLocation())) {
+        } else if (rook.getAlliance() == Alliance.BLACK && !blackKing.hasMoved() && rook.firstMove() && !isTileAttacked(alliance, blackKing.getLocation())) {
             if (x == 0) {
                 // Need to check 3 tiles 
                 if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))

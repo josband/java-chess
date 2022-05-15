@@ -5,31 +5,26 @@ import java.util.*;
 import chess.board.*;
 
 public class Rook extends Piece {
-    private boolean moved;
+    private boolean firstMove;
 
     public Rook(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
         this.hashValue = 5;
-        this.moved = false;
+        this.firstMove = true;
     }
 
-    public boolean hasMoved() {
-        return this.moved;
+    public boolean firstMove() {
+        return this.firstMove;
     }
 
-    public void setCastle(boolean moved) {
-        this.moved = moved;
+    public void setMoved() {
+        this.firstMove = false;
     }
 
     @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
         ArrayList<Move> rookMoves = new ArrayList<Move>();
-
-        // Check 'standard rook move'
         checkRankAndFile(rookMoves, board, start);
-
-        // Will have to utilize board manager to control castling
-
         return rookMoves;
     }
 }
