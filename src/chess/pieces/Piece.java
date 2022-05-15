@@ -53,10 +53,6 @@ public abstract class Piece {
         return this.img;
     }
 
-    public void perfromMove(Move move) {
-        
-    }
-
     // USAGE FOR: Bishop and Queen
     protected void checkDiagonal(List<Move> moves, Board board, Tile start, int deltaX, int deltaY) {
         int currX = start.getX();
@@ -69,8 +65,11 @@ public abstract class Piece {
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
                     moves.add(new Move(start, board.get(currY, currX), this));
+                    if (board.get(currY, currX).isOccupied()) {
+                        done = true;
+                    }
+                } else 
                     done = true;
-                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
             }  
@@ -89,8 +88,11 @@ public abstract class Piece {
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
                     moves.add(new Move(start, board.get(currY, currX), this));
+                    if (board.get(currY, currX).isOccupied()) {
+                        done = true;
+                    }
+                } else 
                     done = true;
-                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
             }  
@@ -104,8 +106,11 @@ public abstract class Piece {
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
                     moves.add(new Move(start, board.get(currY, currX), this));
+                    if (board.get(currY, currX).isOccupied()) {
+                        done = true;
+                    }
+                } else 
                     done = true;
-                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
             }      
@@ -119,8 +124,11 @@ public abstract class Piece {
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
                     moves.add(new Move(start, board.get(currY, currX), this));
+                    if (board.get(currY, currX).isOccupied()) {
+                        done = true;
+                    }
+                } else 
                     done = true;
-                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
             }    
@@ -134,8 +142,11 @@ public abstract class Piece {
             try { 
                 if (!board.get(currY, currX).isOccupied() || board.get(currY, currX).getPiece().getAlliance() != this.alliance) {
                     moves.add(new Move(start, board.get(currY, currX), this));
+                    if (board.get(currY, currX).isOccupied()) {
+                        done = true;
+                    }
+                } else 
                     done = true;
-                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 done = true;
             }    

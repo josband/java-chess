@@ -11,7 +11,7 @@ public final class Pawn extends Piece {
     public Pawn(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
         this.enPassant = false;
-        this.direction = (byte) (this.alliance == Alliance.WHITE ? 1 : -1);
+        this.direction = (byte) (this.alliance == Alliance.WHITE ? -1 : 1);
         this.hashValue = 1;
     }
 
@@ -29,7 +29,7 @@ public final class Pawn extends Piece {
 
     @Override
     public List<Move> calculateLegalMoves(Board board, Tile start) {
-        List<Move> pawnMoves = new ArrayList<Move>(); // Replace with hashmap for better performance
+        List<Move> pawnMoves = new ArrayList<Move>();
         
         int x = start.getX();
         int y = start.getY();
@@ -41,7 +41,7 @@ public final class Pawn extends Piece {
             pawnMoves.add(new Move(start, board.get(y + this.direction, x), this));
 
             // Pawns can move two spaces if they are on their starting row
-            if ((this.alliance == Alliance.WHITE && y == 1 || this.alliance == Alliance.BLACK && y == 6) 
+            if ((this.alliance == Alliance.WHITE && y == 6 || this.alliance == Alliance.BLACK && y == 1) 
                 && board.get(y + 2 * this.direction, x).getPiece() == null) {
                 pawnMoves.add(new Move(start, board.get(y + 2 * this.direction, x), this));
             }
@@ -49,39 +49,28 @@ public final class Pawn extends Piece {
 
         // Pawns can only capture diagonally if there is a piece on the tile of a different alliance
         // Need to be careful of index out of bounds
-        try {
-            if (x + 1 < 8 && board.get(y + this.direction, x + 1).isOccupied() && board.get(y + this.direction, x + 1).getPiece().getAlliance() != this.alliance) {
-                pawnMoves.add(new Move(start, board.get(y + this.direction, x + 1), this));
-            }
-            
-            if (x - 1 > -1 && board.get(y + this.direction, x - 1).isOccupied() && board.get(y + this.direction, x - 1).getPiece().getAlliance() != this.alliance) {
-                pawnMoves.add(new Move(start, board.get(y + this.direction, x - 1), this));
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {}
+        if (x + 1 < 8 && board.get(y + this.direction, x + 1).isOccupied() && board.get(y + this.direction, x + 1).getPiece().getAlliance() != this.alliance) {
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x + 1), this));
+        }
+        
+        if (x - 1 > -1 && board.get(y + this.direction, x - 1).isOccupied() && board.get(y + this.direction, x - 1).getPiece().getAlliance() != this.alliance) {
+            pawnMoves.add(new Move(start, board.get(y + this.direction, x - 1), this));
+        }
 
         // En Passant NEEDS TO BE REVIEWED
         
         if (y == 3 && this.alliance == Alliance.WHITE) {
-            try {
-                if (board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
+            if (x + 1 < 8 && board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
                 pawnMoves.add(new Move(start, board.get(y + 1, x + 1), this));
-            } catch (ArrayIndexOutOfBoundsException e) {}
             
-            try {
-                if (board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
-                    pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
-            } catch (ArrayIndexOutOfBoundsException e) {}
-            
+            if (x - 1 > -1 && board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
         } else if (y == 4 && this.alliance == Alliance.BLACK) {
-            try {
-                if (board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y - 1, x + 1), this));
-            } catch (ArrayIndexOutOfBoundsException e) {}
+            if (x + 1 < 8 && board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y + 1, x + 1), this));
             
-            try {
-                if (board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y - 1, x - 1), this));
-            } catch (ArrayIndexOutOfBoundsException e) {}
+            if (x - 1 > -1 && board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
+                pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
         }
         return pawnMoves;
     }

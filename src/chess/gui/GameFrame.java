@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.util.*;
 
 import javax.swing.*;
@@ -90,10 +91,11 @@ public class GameFrame extends JFrame {
         private Tile tile;
         private int x;
         private int y;
+        private GridBagConstraints constraints = new GridBagConstraints();
     
         private static final Color WHITE_COLOR = new Color(0xFFFBF1);
         private static final Color BLACK_COLOR = new Color(0x1234567);
-        private static final JLabel BLUE_DOT = new JLabel(new ImageIcon("./src/chess/pieces/piece PNGs/blue-dot.png"));
+        //private static final JLabel GREEN_DOT = new JLabel(new ImageIcon("./src/chess/pieces/piece PNGs/green-dot.png"));
     
         // Will need a JLabel of the piece Image Icon that will be centered
         public TilePanel(Tile tile) {
@@ -117,8 +119,10 @@ public class GameFrame extends JFrame {
                             // First click
                             sourceTile = tile;
                             humanMovedPiece = sourceTile.getPiece();
+                            // If no piece selected or selected wrong color piece, go back to null
                             if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn()) {
                                 sourceTile = null;
+                                humanMovedPiece = null;
                             }
                         } else {
                             // Second click
@@ -178,17 +182,20 @@ public class GameFrame extends JFrame {
 
         public void drawTile(Board board) {
             setColor();
-            assignTilePiece();
             highlightLegalMoves(board);
+            assignTilePiece();
             validate();
             repaint();
         }
 
         private void highlightLegalMoves(Board board) {
+            this.removeAll();
             if (true) { // In case I want this to be an option later on
                 for (Move move : pieceLegalMoves(board)) {
                     if (move.getTo() == this.tile) {
-                        add(BLUE_DOT);
+                        constraints.gridx = GridBagConstraints.CENTER;
+                        constraints.gridy = GridBagConstraints.CENTER;
+                        this.add(new JLabel(new ImageIcon("./src/chess/pieces/piece PNGs/green-dot.png")), constraints);
                     }
                 }
             }
@@ -210,7 +217,7 @@ public class GameFrame extends JFrame {
         }
     
         private void assignTilePiece() {
-            this.removeAll();
+            // this.removeAll();
             
             JLabel label = new JLabel();
             if (tile.getPiece() != null) {
@@ -220,7 +227,9 @@ public class GameFrame extends JFrame {
                 label.setVerticalAlignment(JLabel.CENTER);;
             }
             
-            this.add(label);
+            constraints.gridx = GridBagConstraints.CENTER;
+            constraints.gridy = GridBagConstraints.CENTER;
+            this.add(label, constraints);
         }
     }
 }

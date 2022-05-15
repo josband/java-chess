@@ -3,7 +3,7 @@ package chess.board;
 import chess.pieces.*;
 
 public class Board {
-    private static String imgRoot = "./src/chess/pieces/piece PNGs/";
+    private final static String imgRoot = "./src/chess/pieces/piece PNGs/";
     
     Tile[][] board;
     private static final int BOARD_SIZE = 8;
@@ -80,5 +80,6 @@ public class Board {
 
         source.setPiece(null);
         destination.setPiece(movedPiece);
+        movedPiece.setLocation(destination);
     }
 }

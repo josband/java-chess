@@ -29,7 +29,7 @@ public class Knight extends Piece{
         for(int i = 0; i < deltaX.length; i++) {
             try {
                 Tile moveLocation = board.get(y + deltaY[i], x + deltaX[i]);
-                if (!moveLocation.isOccupied() || moveLocation.getPiece().getAlliance() == this.alliance) {
+                if (!moveLocation.isOccupied() || moveLocation.getPiece().getAlliance() != this.alliance) {
                     knightMoves.add(new Move(start, moveLocation, this));
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
