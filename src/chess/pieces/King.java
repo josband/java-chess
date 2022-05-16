@@ -4,20 +4,27 @@ import java.util.*;
 import chess.board.*;
 
 public class King extends Piece {
-    private boolean moved; // Change to firstMove
+    private boolean firstMove;
+    private BoardManager manager;
 
     public King(Alliance alliance, String imgPath, Tile location) {
         super(alliance, imgPath, location);
-        this.moved = false;
+        this.firstMove = true;
         this.hashValue = 9;
+        this.manager = null;
     }
 
-    public boolean setMoved(boolean check) {
-        return this.moved = check;
+    public void addManager(BoardManager manager) {
+        if (this.manager == null)
+            this.manager = manager;
     }
 
-    public boolean hasMoved() {
-        return this.moved;
+    public boolean setMoved() {
+        return this.firstMove = false;
+    }
+
+    public boolean firstMove() {
+        return this.firstMove;
     }
 
     @Override
@@ -50,7 +57,7 @@ public class King extends Piece {
             } catch (ArrayIndexOutOfBoundsException e) {
             }
         }
-
+        manager.addCastlingMoves(alliance, kingMoves);
         return kingMoves;
     }
 }

@@ -21,11 +21,13 @@ public class Game {
         this.whiteMoves = new ArrayList<Move>();
         this.blackMoves = new ArrayList<Move>();
         this.board = new Board();
-        this .lastMove = null;
+        this.lastMove = null;
         this.whitePlayer = new Player(Alliance.WHITE, this.board);
         this.blackPlayer = new Player(Alliance.BLACK, this.board);
         this.manager = new BoardManager(board, whiteMoves, blackMoves, blackPlayer, whitePlayer);
         this.turn = Alliance.WHITE;
+        whitePlayer.getKing().addManager(manager);
+        blackPlayer.getKing().addManager(manager);
     }
 
     public Board getBoard() {

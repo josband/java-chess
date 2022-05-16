@@ -24,21 +24,21 @@ public class Board {
             switch (i) {
                 case 0:
                     board[7][i].setPiece(new Rook(Alliance.WHITE, imgRoot +  "wR.png", board[7][i]));
-                    board[7][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.WHITE, imgRoot +  "wR.png", board[7][i]));
+                    board[7][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.WHITE, imgRoot +  "wR.png", board[7][BOARD_SIZE - 1 - i]));
                     board[0][i].setPiece(new Rook(Alliance.BLACK, imgRoot +  "bR.png", board[0][i]));
-                    board[0][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.BLACK, imgRoot +  "bR.png", board[0][i]));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Rook(Alliance.BLACK, imgRoot +  "bR.png", board[0][BOARD_SIZE - 1 - i]));
                     break;
                 case 1:
                     board[7][i].setPiece(new Knight(Alliance.WHITE, imgRoot +  "wN.png", board[7][i]));
-                    board[7][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.WHITE, imgRoot +  "wN.png", board[7][i]));
+                    board[7][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.WHITE, imgRoot +  "wN.png", board[7][BOARD_SIZE - 1 - i]));
                     board[0][i].setPiece(new Knight(Alliance.BLACK, imgRoot +  "bN.png", board[0][i]));
-                    board[0][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.BLACK, imgRoot +  "bN.png", board[0][i]));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Knight(Alliance.BLACK, imgRoot +  "bN.png", board[0][BOARD_SIZE - 1 - i]));
                     break;
                 case 2:
                     board[7][i].setPiece(new Bishop(Alliance.WHITE, imgRoot +  "wB.png", board[7][i]));
-                    board[7][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.WHITE, imgRoot +  "wB.png", board[7][i]));
+                    board[7][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.WHITE, imgRoot +  "wB.png", board[7][BOARD_SIZE - 1 - i]));
                     board[0][i].setPiece(new Bishop(Alliance.BLACK, imgRoot +  "bB.png", board[0][i]));
-                    board[0][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.BLACK, imgRoot +  "bB.png", board[0][i]));
+                    board[0][BOARD_SIZE - 1 - i].setPiece(new Bishop(Alliance.BLACK, imgRoot +  "bB.png", board[0][BOARD_SIZE - 1 - i]));
                     break;
                 case 3:
                     board[7][i].setPiece(new Queen(Alliance.WHITE, imgRoot +  "wQ.png", board[7][i]));
@@ -71,15 +71,5 @@ public class Board {
                 board[i][j].removePiece();
             }
         }
-    }
-
-    public void executeMove(Move move) {
-        Tile source = move.getFrom();
-        Tile destination = move.getTo();
-        Piece movedPiece = move.getMovedPiece();
-
-        source.setPiece(null);
-        destination.setPiece(movedPiece);
-        movedPiece.setLocation(destination);
     }
 }

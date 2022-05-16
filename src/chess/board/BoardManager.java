@@ -1,13 +1,14 @@
 package chess.board;
 
 import java.util.*;
+
 import chess.pieces.*;
 import chess.player.*;
 
 public class BoardManager {
     private final Board board;
-    private final King blackKing;
-    private final King whiteKing;
+    private final Player whitePlayer;
+    private final Player blackPlayer;
     private final List<Move> whiteMoves;
     private final List<Move> blackMoves;
     private final HashMap<Tile, Move> attackMap;
@@ -26,8 +27,8 @@ public class BoardManager {
         this.attackMap = new HashMap<Tile, Move>();
         this.whiteMoves = whiteMoves;
         this.blackMoves = blackMoves;
-        this.blackKing = black.getKing();
-        this.whiteKing = white.getKing();
+        this.whitePlayer = white;
+        this.blackPlayer = black;
     }
 
     /**
@@ -35,11 +36,9 @@ public class BoardManager {
      * @param alliance The alliance to be evaluated whether or not is in check
      */
     public boolean isChecked(Alliance alliance) {
-        King king = alliance == Alliance.WHITE ? whiteKing : blackKing;
-        int x = king.getLocation().getX();
-        int y = king.getLocation().getY();
+        King king = alliance == Alliance.WHITE ? whitePlayer.getKing() : blackPlayer.getKing();
 
-        return isTileAttacked(king.getAlliance(), board.get(y, x));
+        return isTileAttacked(king.getAlliance(), king.getLocation());
     }
 
     /**
@@ -50,7 +49,7 @@ public class BoardManager {
         if (!isChecked(alliance)) 
             return false;
         else {
-            King king = alliance == Alliance.WHITE ? whiteKing : blackKing;
+            King king = alliance == Alliance.WHITE ? whitePlayer.getKing() : blackPlayer.getKing();
             int kingX = king.getLocation().getX();
             int kingY = king.getLocation().getY();
 
@@ -93,8 +92,174 @@ public class BoardManager {
      * @return Whether or not a piece of 'alliance' could be attacked at 'tile' 
      */
     public boolean isTileAttacked(Alliance alliance, Tile tile) {
-        updateAttackMap(alliance);
-        return this.attackMap.get(tile) != null;
+        return checkDiagonalAttacks(alliance, tile) || checkRankAndFileAttacks(alliance, tile) || checkKnightAttacks(alliance, tile);
+    }
+
+    private boolean checkDiagonalAttacks(Alliance alliance, Tile tile) {
+        int currX = tile.getX() + 1;
+        int currY = tile.getY() + 1;
+
+        while (currX < 8 && currY < 8) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof King || piece instanceof Bishop) {
+                    return true;
+                } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.BLACK) {
+                    return true;
+                }
+            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+                break;
+            }
+            currX += 1;
+            currY += 1;
+        }
+
+        currX = tile.getX() - 1;
+        currY = tile.getY() - 1;
+        while (currX > -1 && currY > -1) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof King || piece instanceof Bishop) {
+                    return true;
+                } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.WHITE) {
+                    return true;
+                }
+            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+                break;
+            }
+            currX += -1;
+            currY += -1;
+        }
+
+        currX = tile.getX() - 1;
+        currY = tile.getY() + 1;
+        while (currX > -1 && currY < 8) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof King || piece instanceof Bishop) {
+                    return true;
+                } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.BLACK) {
+                    return true;
+                }
+            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+                break;
+            }
+            currX += -1;
+            currY += 1;
+        }
+
+        currX = tile.getX() + 1;
+        currY = tile.getY() - 1;
+        while (currX < 8 && currY > -1) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof King || piece instanceof Bishop) {
+                    return true;
+                } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.WHITE) {
+                    return true;
+                }
+            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+                break;
+            }
+            currX += 1;
+            currY += -1;
+        }
+
+        return false;
+    }
+
+    private boolean checkRankAndFileAttacks(Alliance alliance, Tile tile) {
+        // Check tiles apporaching file H
+        int currX = tile.getX() + 1;
+        int currY = tile.getY();
+        while (currX < 8) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
+                (piece instanceof Rook || (piece instanceof King && Math.abs(currX - tile.getX()) == 1))) {
+                
+                return true;
+            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+                break;
+            }
+            currX++;
+        }
+
+        // Check tiles apporaching file A
+        currX = tile.getX() - 1;
+        while (currX > -1) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
+                (piece instanceof Rook || (piece instanceof King && Math.abs(currX - tile.getX()) == 1))) {
+                
+                return true;
+            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+                break;
+            }
+            currX--;     
+        }
+
+        // Check tiles apporaching rank 8
+        currX = tile.getX();
+        currY = tile.getY() + 1;
+        while (currY < 8) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
+                (piece instanceof Rook || (piece instanceof King && Math.abs(currY - tile.getY()) == 1))) {
+                
+                return true;
+            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+                break;
+            }
+            currY++;     
+        }
+
+        // Check tiles apporaching rank 1
+        currY = tile.getY() - 1;
+        while (currY > -1) {
+            Tile checkTile = board.get(currY, currX);
+            Piece piece = checkTile.getPiece();
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
+                ((piece instanceof Rook || (piece instanceof King && Math.abs(currY - tile.getY()) == 1)))) {
+                
+                return true;
+            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+                break;
+            }
+            currY--;     
+        }
+
+        return false;
+    }
+
+    private boolean checkKnightAttacks(Alliance alliance, Tile tile) {
+        int[] deltaY = {2, 1, -1, -2, -2, -1, 1, 2};
+        int[] deltaX = {1, 2, 2, 1, -1, -2, -2, -1};
+        int x = tile.getX();
+        int y = tile.getY();
+
+        for(int i = 0; i < deltaX.length; i++) {
+            try {
+                Tile checkTile = board.get(y + deltaY[i], x + deltaX[i]);
+                Piece piece = checkTile.getPiece();
+                if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
+                piece instanceof Knight) {
+                
+                return true;
+            }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // Not valid! We can just continue
+                continue;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -102,8 +267,9 @@ public class BoardManager {
      * updateAttackedMap determines the alliance that the map will be used for/knowing that the opponent is not 'alliance'. 
      * @param alliance the alliance that will be used to determine the OPPOSING moves that need to be hashed to
      */
-    private void updateAttackMap(Alliance alliance) {
+    public void updateAttackMap(Alliance alliance) { 
         List<Move> possibleMoves = alliance == Alliance.WHITE ? blackMoves : whiteMoves;
+        updatePossibleMoves(possibleMoves, alliance);
         attackMap.clear();
 
         for (Move move : possibleMoves) {
@@ -111,33 +277,93 @@ public class BoardManager {
         }
     }
 
-    public List<Move> addCastlingMoves(Rook rook, List<Move> rookMoves) { // Change over so that it is part of king's call
-        updateAttackMap(rook.getAlliance());
-        int x = rook.getLocation().getX();
-        int y = rook.getLocation().getY();
-        Alliance alliance = rook.getAlliance();
+    private void updatePossibleMoves(List<Move> possibleMoves, Alliance alliance) {
+        List<Piece> pieces = alliance == Alliance.WHITE ? blackPlayer.getPieces() : whitePlayer.getPieces();
 
-        if (rook.getAlliance() == Alliance.WHITE && !whiteKing.hasMoved() && rook.firstMove() && !isChecked(alliance)) {
-            if (x == 0) {
-                // Need to check 3 tiles 
-                if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))
-                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x + 3), rook, new Move(whiteKing.getLocation(), board.get(y, x + 2), whiteKing)));
-            } else {
-                // just 2 tiles
-                if (!isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2)))
-                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x - 2), rook, new Move(whiteKing.getLocation(), board.get(y, x -1), whiteKing)));
-            }
-        } else if (rook.getAlliance() == Alliance.BLACK && !blackKing.hasMoved() && rook.firstMove() && !isTileAttacked(alliance, blackKing.getLocation())) {
-            if (x == 0) {
-                // Need to check 3 tiles 
-                if (!isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2)) && !isTileAttacked(alliance, board.get(y, x + 3)))
-                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x + 3), rook, new Move(blackKing.getLocation(), board.get(y, x + 2), whiteKing)));
-            } else {
-                // just 2 tiles
-                if (!isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2)))
-                    rookMoves.add(new Move(rook.getLocation(), board.get(y, x - 2), rook, new Move(blackKing.getLocation(), board.get(y, x -1), whiteKing)));
-            }
+        possibleMoves.clear();
+        for (Piece piece : pieces) {
+            possibleMoves.addAll(piece.calculateLegalMoves(board, piece.getLocation()));
         }
-        return rookMoves;
+    }
+
+    public void executeMove(Move move) {
+        if (move == null) {
+            return;
+        }
+        Tile source = move.getFrom();
+        Tile destination = move.getTo();
+        Piece movedPiece = move.getMovedPiece();
+
+        // TODO: Add EnPassant
+
+        // Execute Initial phase of Move
+        Piece removedPiece = null;
+        if (source.isOccupied()) {
+            removedPiece = source.getPiece();
+            List<Piece> pieces = removedPiece.getAlliance() == Alliance.WHITE ? whitePlayer.getPieces() : blackPlayer.getPieces();
+            pieces.remove(removedPiece);
+        }
+        source.setPiece(null);
+        destination.setPiece(movedPiece);
+        movedPiece.setLocation(destination);
+
+        // Check if we have moved a rook or kingk
+        if (movedPiece instanceof King) {
+            ((King) movedPiece).setMoved();
+        } else if (movedPiece instanceof Rook) {
+            ((Rook) movedPiece).setMoved();
+        }
+
+        // Consider castling
+        if (move.isCastling()) {
+            executeCastle(move);
+        }
+    }
+
+    private void executeCastle(Move move) {
+        Player player = move.getMovedPiece().getAlliance() == Alliance.WHITE ? whitePlayer : blackPlayer;
+        Rook rook;
+        Tile source, destination;
+        int y = player.getAlliance() == Alliance.WHITE ? 7 : 0;
+        int x;
+
+        if (move.isQueenCastling()) {
+            rook = player.getQueenRook();
+            x = rook.getLocation().getX() == 0 ? 3 : 5;
+            destination = board.get(y, x);
+        } else {
+            rook = player.getKingRook();
+            x = rook.getLocation().getX() == 0 ? 3 : 5;
+            destination = board.get(y, x);
+        }
+        
+        source = rook.getLocation();
+        source.setPiece(null);
+        destination.setPiece(rook);
+        rook.setLocation(destination);
+    }
+
+    public void addCastlingMoves(Alliance alliance, List<Move> kingMoves) { // Change over so that it is part of king's call
+        Player player = alliance == Alliance.WHITE ? whitePlayer : blackPlayer;
+        King king = player.getKing();
+        Rook queenRook = player.getQueenRook();
+        Rook kingRook = player.getKingRook();
+        int x = king.getLocation().getX();
+        int y = king.getLocation().getY();
+
+        if (isChecked(king.getAlliance()) || !king.firstMove())
+            return;
+
+        if (kingRook.firstMove() && !board.get(y, x + 1).isOccupied() && !board.get(y, x + 2).isOccupied()
+            && !isTileAttacked(alliance, board.get(y, x + 1)) && !isTileAttacked(alliance, board.get(y, x + 2))) {
+
+            kingMoves.add(new Move(king.getLocation(), board.get(y, x + 2), king, true, false));
+        }
+        
+        if (queenRook.firstMove() && !board.get(y, x - 3).isOccupied() && !board.get(y, x - 2).isOccupied() && !board.get(y, x - 1).isOccupied()
+            && !isTileAttacked(alliance, board.get(y, x - 1)) && !isTileAttacked(alliance, board.get(y, x - 2))) {
+
+            kingMoves.add(new Move(king.getLocation(), board.get(y, x - 2), king, false, true));
+        }
     }
 }

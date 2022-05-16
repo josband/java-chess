@@ -49,7 +49,8 @@ public class Tile {
     public int hashCode() {
         int result = 31 * this.x;
         result = result + 41 * this.y;
-        result *= this.piece.getValue();
+        if (this.piece != null)
+            result *= this.piece.getValue();
         return result;
     }
 }

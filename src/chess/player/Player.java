@@ -6,13 +6,19 @@ import chess.board.Board;
 import chess.pieces.*;
 
 public class Player {
-    private Alliance alliance;
-    private List<Piece> pieces;
+    private final Alliance alliance;
+    private final King king;
+    private final Rook queenRook;
+    private final Rook kingRook;
+    private final List<Piece> pieces;
 
     public Player(Alliance alliance, Board board) {
         this.alliance = alliance;
         this.pieces = new LinkedList<Piece>();
         initializePieceList(board);
+        this.king = findKing();
+        this.queenRook = findQueenRook();
+        this.kingRook = findKingRook();
     }
 
     public Alliance getAlliance() {
@@ -45,9 +51,33 @@ public class Player {
         }
     }
 
-    public King getKing() {
+    private King findKing() {
         assert pieces.get(8) instanceof King;
         
         return (King) pieces.get(8);
+    }
+
+    private Rook findKingRook() {
+        assert pieces.get(14) instanceof Rook;
+
+        return (Rook) pieces.get(14);
+    }
+
+    private Rook findQueenRook() {
+        assert pieces.get(0) instanceof Rook;
+
+        return (Rook) pieces.get(0);
+    }
+
+    public King getKing() {
+        return this.king;
+    }
+
+    public Rook getKingRook() {
+        return this.kingRook;
+    }
+
+    public Rook getQueenRook() {
+        return this.queenRook;
     }
 }

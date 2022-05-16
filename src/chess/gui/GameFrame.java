@@ -119,8 +119,8 @@ public class GameFrame extends JFrame {
                             // First click
                             sourceTile = tile;
                             humanMovedPiece = sourceTile.getPiece();
-                            // If no piece selected or selected wrong color piece, go back to null
-                            if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn()) {
+                            // If no piece selected or selected wrong color piece or the piece doesn't have any legal moves, go back to null
+                            if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn() || pieceLegalMoves(board).isEmpty()) {
                                 sourceTile = null;
                                 humanMovedPiece = null;
                             }
@@ -131,14 +131,21 @@ public class GameFrame extends JFrame {
                                 humanMovedPiece = null;
                             } else {
                                 destinationTile = tile;
-                                Move move = new Move(sourceTile, destinationTile, humanMovedPiece);
-                                board.executeMove(move);
-                                game.endTurn();
+                                // Check if there is a legal move for the human moved piece
+                                Move move = null;
+                                for (Move possibleMove : pieceLegalMoves(board)) {
+                                    if (possibleMove.getTo() == destinationTile) {
+                                        move = possibleMove;
+                                        game.getManager().executeMove(move);
+                                        game.endTurn();
+                                        // TODO: fix the king
+                                        // TODO: Add check for checkmate
+                                        break;
+                                    }
+                                }
                                 sourceTile = null;
                                 destinationTile = null;
                                 humanMovedPiece = null;
-                                // FILL IN WITH ACTUALLY DOING THE MOVE
-                                // maybe make a method in game that preps all of the game data
                             }
                             
                         }
