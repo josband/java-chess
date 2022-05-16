@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.util.*;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -138,7 +139,8 @@ public class GameFrame extends JFrame {
                                         move = possibleMove;
                                         game.getManager().executeMove(move);
                                         game.endTurn();
-                                        // TODO: fix the king
+                                        if (game.getManager().isChecked(game.getTurn()))
+                                            System.out.println("CHECK!");
                                         // TODO: Add check for checkmate
                                         break;
                                     }
