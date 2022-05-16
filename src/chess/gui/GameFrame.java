@@ -17,6 +17,8 @@ import chess.Game;
 import chess.board.Board;
 import chess.board.Move;
 import chess.board.Tile;
+import chess.pieces.Alliance;
+import chess.pieces.King;
 import chess.pieces.Piece;
 
 // New Territory, will implement when there is more functionality
@@ -96,6 +98,8 @@ public class GameFrame extends JFrame {
     
         private static final Color WHITE_COLOR = new Color(0xFFFBF1);
         private static final Color BLACK_COLOR = new Color(0x1234567);
+        private static final ImageIcon BLACK_KING_CHECK = new ImageIcon("src/chess/pieces/piece PNGs/bKcheck.png");
+        private static final ImageIcon WHITE_KING_CHECK = new ImageIcon("src/chess/pieces/piece PNGs/wKcheck.png");
         //private static final JLabel GREEN_DOT = new JLabel(new ImageIcon("./src/chess/pieces/piece PNGs/green-dot.png"));
     
         // Will need a JLabel of the piece Image Icon that will be centered
@@ -139,8 +143,6 @@ public class GameFrame extends JFrame {
                                         move = possibleMove;
                                         game.getManager().executeMove(move);
                                         game.endTurn();
-                                        if (game.getManager().isChecked(game.getTurn()))
-                                            System.out.println("CHECK!");
                                         // TODO: Add check for checkmate
                                         break;
                                     }
@@ -216,6 +218,13 @@ public class GameFrame extends JFrame {
             }
         }
 
+        private void addCheckImage(Alliance alliance) {
+            String imgPath = "src/chess/pieces/piece PNGs/";
+            String checkedKing = alliance == Alliance.WHITE ? "wKcheck.png" : "bKcheck.png";
+            this.removeAll();
+            this.add(new JLabel(new ImageIcon(imgPath + checkedKing)));
+        }
+
         private List<Move> pieceLegalMoves(Board board) {
             if (humanMovedPiece != null && humanMovedPiece.getAlliance() == game.getTurn()) {
                 return humanMovedPiece.calculateLegalMoves(board, sourceTile);
@@ -236,7 +245,13 @@ public class GameFrame extends JFrame {
             
             JLabel label = new JLabel();
             if (tile.getPiece() != null) {
-                label.setIcon(tile.getPiece().Image());
+                if (tile.getPiece() instanceof King && tile.getPiece().getAlliance() == game.getTurn() 
+                    && game.getManager().isChecked(game.getTurn())) {
+                    ImageIcon img = game.getTurn() == Alliance.WHITE ? WHITE_KING_CHECK : BLACK_KING_CHECK;
+                    label.setIcon(img);
+                } else {
+                    label.setIcon(tile.getPiece().Image());
+                }
                 label.setLayout(null);
                 label.setHorizontalAlignment(JLabel.CENTER);
                 label.setVerticalAlignment(JLabel.CENTER);;
