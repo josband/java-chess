@@ -33,10 +33,15 @@ public final class Pawn extends Piece {
         
         int x = start.getX();
         int y = start.getY();
+
+        // In the last rank, we will have to eventually promote
+        if (y + this.direction > 7 || y + this.direction < 0) {
+            return pawnMoves;
+        }
         
         // Pawns can only move forward, unless there is a piece on a tile one diagonal 
         // away, in which case the pawn can capture the piece
-        
+
         if (board.get(y + this.direction, x).getPiece() == null) {
             pawnMoves.add(new Move(start, board.get(y + this.direction, x), this));
 

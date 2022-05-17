@@ -13,8 +13,6 @@ public class BoardManager {
     private final List<Piece> whitePieces;
     private final List<Piece> blackPieces;
 
-    // TODO: check if I need to get rid of the attackMap
-
     /**
      * Creates an Object responsible for overviewing a board of pieces for the chess game. It is utilized
      * in checking whether tiles are attacked by enemy pieces, a player is in check, or a player has been mated.
@@ -56,7 +54,15 @@ public class BoardManager {
         if (!isChecked(alliance)) {
             return false;
         }
-        return getAllLegalMoves(alliance).isEmpty();
+        List<Piece> pieces = alliance == Alliance.WHITE ? whitePieces : blackPieces;
+        for (Piece piece : pieces) {
+            for (Move move : piece.calculateLegalMoves(board, piece.getLocation())) {
+                if (testMove(move)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private List<Move> getAllLegalMoves(Alliance alliance) {
