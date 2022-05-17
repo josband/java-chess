@@ -102,6 +102,8 @@ public class BoardManager {
                     return true;
                 } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.BLACK) {
                     return true;
+                } else {
+                    break;
                 }
             } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
                 break;
@@ -120,6 +122,8 @@ public class BoardManager {
                     return true;
                 } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.WHITE) {
                     return true;
+                } else {
+                    break;
                 }
             } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
                 break;
@@ -138,6 +142,8 @@ public class BoardManager {
                     return true;
                 } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.BLACK) {
                     return true;
+                } else {
+                    break;
                 }
             } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
                 break;
@@ -156,6 +162,8 @@ public class BoardManager {
                     return true;
                 } else if (Math.abs(tile.getX() - currX) == 1 && piece instanceof Pawn && alliance == Alliance.WHITE) {
                     return true;
+                } else {
+                    break;
                 }
             } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
                 break;
@@ -174,11 +182,13 @@ public class BoardManager {
         while (currX < 8) {
             Tile checkTile = board.get(currY, currX);
             Piece piece = checkTile.getPiece();
-            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
-                (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currX - tile.getX()) == 1))) {
-                
-                return true;
-            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currX - tile.getX()) == 1)) {
+                    return true;
+                } else {
+                    break;
+                }
+            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
                 break;
             }
             currX++;
@@ -189,10 +199,12 @@ public class BoardManager {
         while (currX > -1) {
             Tile checkTile = board.get(currY, currX);
             Piece piece = checkTile.getPiece();
-            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
-                (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currX - tile.getX()) == 1))) {
-                
-                return true;
+            if (checkTile.isOccupied() && alliance != piece.getAlliance()) {
+                if (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currX - tile.getX()) == 1)) {
+                    return true;
+                } else {
+                    break;
+                }
             } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
                 break;
             }
@@ -205,11 +217,14 @@ public class BoardManager {
         while (currY < 8) {
             Tile checkTile = board.get(currY, currX);
             Piece piece = checkTile.getPiece();
-            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
-                (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currY - tile.getY()) == 1))) {
-                
-                return true;
-            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance) {
+                if (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currY - tile.getY()) == 1)) {
+                    return true;
+                } else {
+                    break;
+                }
+            }
+             else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
                 break;
             }
             currY++;     
@@ -220,11 +235,13 @@ public class BoardManager {
         while (currY > -1) {
             Tile checkTile = board.get(currY, currX);
             Piece piece = checkTile.getPiece();
-            if (checkTile.isOccupied() && piece.getAlliance() != alliance && 
-                ((piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currY - tile.getY()) == 1)))) {
-                
-                return true;
-            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+            if (checkTile.isOccupied() && piece.getAlliance() != alliance) {
+                if (piece instanceof Rook || piece instanceof Queen || (piece instanceof King && Math.abs(currY - tile.getY()) == 1)) {
+                    return true;
+                } else {
+                    break;
+                }
+            } else if (checkTile.isOccupied() && piece.getAlliance() != alliance) {
                 break;
             }
             currY--;     

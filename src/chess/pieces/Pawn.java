@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
         int x = start.getX();
         int y = start.getY();
 
-        // In the last rank, we will have to eventually promote
+        // In the last rank, we will have to eventually promote DELETE TO EXPLORE MORE
         if (y + this.direction > 7 || y + this.direction < 0) {
             return pawnMoves;
         }
