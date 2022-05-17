@@ -3,22 +3,31 @@ package chess.player;
 import java.util.*;
 
 import chess.board.Board;
+import chess.board.Move;
 import chess.pieces.*;
 
 public class Player {
     private final Alliance alliance;
     private final King king;
+    private final Board board;
     private final Rook queenRook;
     private final Rook kingRook;
     private final List<Piece> pieces;
+    private final List<Move> moves;
 
     public Player(Alliance alliance, Board board) {
         this.alliance = alliance;
+        this.board = board;
         this.pieces = new LinkedList<Piece>();
         initializePieceList(board);
+        this.moves = new ArrayList<Move>();
         this.king = findKing();
         this.queenRook = findQueenRook();
         this.kingRook = findKingRook();
+    }
+
+    public List<Move> getMovesList() {
+        return this.moves;
     }
 
     public Alliance getAlliance() {
@@ -35,6 +44,13 @@ public class Player {
 
     public List<Piece> getPieces() {
         return pieces;
+    }
+
+    public void updateMovesList() {
+        moves.clear();
+        for (Piece piece : pieces) {
+            moves.addAll(piece.calculateLegalMoves(board, piece.getLocation()));
+        }
     }
 
     private void initializePieceList(Board board) {

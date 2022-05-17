@@ -73,6 +73,5 @@ To generate the list of all possible moves, The piece will need the reference fo
 - For the display I only have to display a tile since it contains piece data and the tile then has to know how to draw the Piece object which is really just an image
 
 ## TODO
-1. En Passant
-2. Castling
-3. The GUI
+1. Pawn promotion
+2. Checkmate

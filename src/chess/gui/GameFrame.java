@@ -8,13 +8,13 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.util.*;
 
-import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
 
 import chess.Game;
 import chess.board.Board;
+import chess.board.BoardManager;
 import chess.board.Move;
 import chess.board.Tile;
 import chess.pieces.Alliance;
@@ -25,6 +25,7 @@ import chess.pieces.Piece;
 public class GameFrame extends JFrame {
     private final Game game;
     private final BoardPanel boardPanel;
+    private final BoardManager manager;
     private final Board board;
 
     private Tile sourceTile;
@@ -34,6 +35,7 @@ public class GameFrame extends JFrame {
     public GameFrame() {
         this.game = new Game();
         this.board = this.game.getBoard();
+        this.manager = this.game.getManager();
         this.sourceTile = null;
         this.destinationTile = null;
         this.humanMovedPiece = null;
@@ -141,7 +143,7 @@ public class GameFrame extends JFrame {
                                 for (Move possibleMove : pieceLegalMoves(board)) {
                                     if (possibleMove.getTo() == destinationTile) {
                                         move = possibleMove;
-                                        game.getManager().executeMove(move);
+                                        manager.executeMove(move, false);
                                         game.endTurn();
                                         // TODO: Add check for checkmate
                                         break;
@@ -218,18 +220,16 @@ public class GameFrame extends JFrame {
             }
         }
 
-        private void addCheckImage(Alliance alliance) {
-            String imgPath = "src/chess/pieces/piece PNGs/";
-            String checkedKing = alliance == Alliance.WHITE ? "wKcheck.png" : "bKcheck.png";
-            this.removeAll();
-            this.add(new JLabel(new ImageIcon(imgPath + checkedKing)));
-        }
-
         private List<Move> pieceLegalMoves(Board board) {
+            List<Move> legalMoves = new ArrayList<Move>();
             if (humanMovedPiece != null && humanMovedPiece.getAlliance() == game.getTurn()) {
-                return humanMovedPiece.calculateLegalMoves(board, sourceTile);
+                for (Move move : humanMovedPiece.calculateLegalMoves(board, sourceTile)) {
+                    if (manager.testMove(move)) {
+                        legalMoves.add(move);
+                    }
+                }
             }
-            return Collections.emptyList();
+            return legalMoves;
         }
     
         private void setColor() {
@@ -246,7 +246,7 @@ public class GameFrame extends JFrame {
             JLabel label = new JLabel();
             if (tile.getPiece() != null) {
                 if (tile.getPiece() instanceof King && tile.getPiece().getAlliance() == game.getTurn() 
-                    && game.getManager().isChecked(game.getTurn())) {
+                    && manager.isChecked(game.getTurn())) {
                     ImageIcon img = game.getTurn() == Alliance.WHITE ? WHITE_KING_CHECK : BLACK_KING_CHECK;
                     label.setIcon(img);
                 } else {

@@ -23,8 +23,8 @@ public final class Pawn extends Piece {
         return enPassant;
     }
 
-    public void setEnPassant() {
-        this.enPassant = true;
+    public void setEnPassant(boolean enPassant) {
+        this.enPassant = enPassant;
     }
 
     @Override
@@ -61,16 +61,16 @@ public final class Pawn extends Piece {
         
         if (y == 3 && this.alliance == Alliance.WHITE) {
             if (x + 1 < 8 && board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y + 1, x + 1), this));
+                pawnMoves.add(new Move(start, board.get(y - 1, x + 1), this, true));
             
             if (x - 1 > -1 && board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
+                pawnMoves.add(new Move(start, board.get(y - 1, x - 1), this, true));
         } else if (y == 4 && this.alliance == Alliance.BLACK) {
             if (x + 1 < 8 && board.get(y, x + 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x + 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y + 1, x + 1), this));
+                pawnMoves.add(new Move(start, board.get(y - 1, x + 1), this, true));
             
             if (x - 1 > -1 && board.get(y, x - 1).getPiece() instanceof Pawn && ((Pawn) board.get(y, x - 1).getPiece()).enPassant)
-                pawnMoves.add(new Move(start, board.get(y + 1, x - 1), this));
+                pawnMoves.add(new Move(start, board.get(y - 1, x - 1), this, true));
         }
         return pawnMoves;
     }

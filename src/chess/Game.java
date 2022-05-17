@@ -12,18 +12,16 @@ public class Game {
     private final Player blackPlayer;
     private List<Move> whiteMoves;
     private List<Move> blackMoves;
-    private Move lastMove;
     private final Board board;
     private Alliance turn;
     private final BoardManager manager;
 
     public Game() {
-        this.whiteMoves = new ArrayList<Move>();
-        this.blackMoves = new ArrayList<Move>();
         this.board = new Board();
-        this.lastMove = null;
         this.whitePlayer = new Player(Alliance.WHITE, this.board);
         this.blackPlayer = new Player(Alliance.BLACK, this.board);
+        this.whiteMoves = whitePlayer.getMovesList();
+        this.blackMoves = blackPlayer.getMovesList();
         this.manager = new BoardManager(board, whiteMoves, blackMoves, blackPlayer, whitePlayer);
         this.turn = Alliance.WHITE;
         whitePlayer.getKing().addManager(manager);
@@ -36,14 +34,6 @@ public class Game {
 
     public BoardManager getManager() {
         return this.manager;
-    }
-
-    public Move getLastMove() {
-        return this.lastMove;
-    }
-
-    public void setLastMove(Move move) {
-        this.lastMove = move; // May also want to add something that will just change the content of the move
     }
 
     public Alliance getTurn() {
