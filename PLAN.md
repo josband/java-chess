@@ -74,4 +74,4 @@ To generate the list of all possible moves, The piece will need the reference fo
 
 ## TODO
 1. Pawn promotion
-2. Checkmate
+2. Checkmate/Stalemate screen for game is over
