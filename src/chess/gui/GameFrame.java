@@ -127,7 +127,7 @@ public class GameFrame extends JFrame {
                             sourceTile = tile;
                             humanMovedPiece = sourceTile.getPiece();
                             // If no piece selected or selected wrong color piece or the piece doesn't have any legal moves, go back to null
-                            if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn() || pieceLegalMoves(board).isEmpty()) {
+                            if (humanMovedPiece == null || humanMovedPiece.getAlliance() != game.getTurn()) { //|| pieceLegalMoves(board).isEmpty()
                                 sourceTile = null;
                                 humanMovedPiece = null;
                             }
@@ -145,7 +145,10 @@ public class GameFrame extends JFrame {
                                         move = possibleMove;
                                         manager.executeMove(move, false);
                                         game.endTurn();
-                                        // TODO: Add check for checkmate
+                                        // if (manager.isStaleMated(game.getTurn()))
+                                        //     System.out.println("Stalemate");
+                                        // else if (manager.isMated(game.getTurn()))
+                                        //     System.out.println("Checkmate");
                                         break;
                                     }
                                 }

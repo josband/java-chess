@@ -17,8 +17,8 @@ public class Board {
     // Sets up the board for a new game
     private void setBoard() {
         for(int i = 0; i < BOARD_SIZE; i++) {
-            board[6][i].setPiece(new Pawn(Alliance.WHITE, imgRoot + "wP.png", board[1][i])); 
-            board[1][i].setPiece(new Pawn(Alliance.BLACK, imgRoot + "bP.png", board[6][i]));
+            board[6][i].setPiece(new Pawn(Alliance.WHITE, imgRoot + "wP.png", board[6][i])); 
+            board[1][i].setPiece(new Pawn(Alliance.BLACK, imgRoot + "bP.png", board[7][i]));
 
             // Need to set constructors properly
             switch (i) {

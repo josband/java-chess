@@ -10,8 +10,8 @@ public class BoardManager {
     private Move lastMove;
     private final Player whitePlayer;
     private final Player blackPlayer;
-    private final List<Move> whiteMoves;
-    private final List<Move> blackMoves;
+    private final List<Piece> whitePieces;
+    private final List<Piece> blackPieces;
 
     // TODO: check if I need to get rid of the attackMap
 
@@ -24,10 +24,10 @@ public class BoardManager {
      * @param black The black player
      * @param white The white player
      */
-    public BoardManager(Board board, List<Move> whiteMoves, List<Move> blackMoves, Player black, Player white) {
+    public BoardManager(Board board, Player black, Player white) {
         this.board = board;
-        this.whiteMoves = whiteMoves;
-        this.blackMoves = blackMoves;
+        this.whitePieces = white.getPieces();
+        this.blackPieces = black.getPieces();
         this.whitePlayer = white;
         this.blackPlayer = black;
     }
@@ -42,46 +42,34 @@ public class BoardManager {
         return isTileAttacked(king.getAlliance(), king.getLocation());
     }
 
+    public boolean isStaleMated(Alliance alliance) {
+        if (isChecked(alliance))
+            return false;
+        return getAllLegalMoves(alliance).isEmpty();
+    }
+
     /**
      * Determines if a player's king is mated
      * @param alliance The alliance to be evaluated whether or not is mated
      */
     public boolean isMated(Alliance alliance) {
-        if (!isChecked(alliance)) 
+        if (!isChecked(alliance)) {
             return false;
-        else {
-            King king = alliance == Alliance.WHITE ? whitePlayer.getKing() : blackPlayer.getKing();
-            int kingX = king.getLocation().getX();
-            int kingY = king.getLocation().getY();
+        }
+        return getAllLegalMoves(alliance).isEmpty();
+    }
 
-            for (int i = -1; i < 2; i++) {
-                // Tile above
-                try {
-                    if (board.get(kingY + 1, kingX + i).isOccupied() || !isTileAttacked(king.getAlliance(), board.get(kingY + 1, kingX + i))) {
-                        return false;
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                }
-                
-                // Tile next to
-                try {
-                    if (i != 0 &&(board.get(kingY, kingX + i).isOccupied() || !isTileAttacked(king.getAlliance(), board.get(kingY, kingX + i)))) {
-                        return false;
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                }
-    
-                // Tile below
-                try {
-                    if (board.get(kingY - 1, kingX + i).isOccupied() || !isTileAttacked(king.getAlliance(), board.get(kingY - 1, kingX + i))) {
-                       return false; 
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
+    private List<Move> getAllLegalMoves(Alliance alliance) {
+        List<Piece> pieces = alliance == Alliance.WHITE ? whitePieces : blackPieces;
+        List<Move> moves = new ArrayList<Move>();
+        for (Piece piece : pieces) {
+            for (Move move : piece.calculateLegalMoves(board, piece.getLocation())) {
+                if (testMove(move)) {
+                    moves.add(move);
                 }
             }
-            
-            return true;
         }
+        return moves;
     }
 
     /**
@@ -271,27 +259,16 @@ public class BoardManager {
         Tile destination = move.getTo();
         Piece movedPiece = move.getMovedPiece();
 
-        // TODO: Add EnPassant
-
         // Execute Initial phase of Move
         Piece removedPiece = null;
         List<Piece> pieces = movedPiece.getAlliance() == Alliance.BLACK ? whitePlayer.getPieces() : blackPlayer.getPieces();
-        if (source.isOccupied()) {
-            removedPiece = source.getPiece();
+        if (destination.isOccupied()) {
+            removedPiece = destination.getPiece();
             pieces.remove(removedPiece);
         }
         source.setPiece(null);
         destination.setPiece(movedPiece);
         movedPiece.setLocation(destination);
-
-        // Check if we have moved a rook, king, or pawn that can be enPassant
-        if (movedPiece instanceof King) {
-            ((King) movedPiece).setMoved();
-        } else if (movedPiece instanceof Rook) {
-            ((Rook) movedPiece).setMoved();
-        } else if (movedPiece instanceof Pawn && Math.abs(source.getY() - destination.getY()) == 2) {
-            ((Pawn) movedPiece).setEnPassant(true);
-        }
 
         // Consider castling & En Passant
         if (move.isCastling()) {
@@ -300,13 +277,22 @@ public class BoardManager {
             executeEnPassant(move, pieces);
         }
 
-        // Check if we need to change enPassant of a Pawn
-        if (lastMove != null && lastMove.getMovedPiece() instanceof Pawn && Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2) {
-            ((Pawn) lastMove.getMovedPiece()).setEnPassant(false);
-        }
-
-        if (test)
+        if (!test) {
             lastMove = move;
+            // Check if we need to change enPassant of a Pawn
+            if (lastMove != null && lastMove.getMovedPiece() instanceof Pawn && Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2) {
+                ((Pawn) lastMove.getMovedPiece()).setEnPassant(false);
+            }
+
+            // Check if we have moved a rook, king, or pawn that can be enPassant for the next move
+            if (movedPiece instanceof King) {
+                ((King) movedPiece).setMoved();
+            } else if (movedPiece instanceof Rook) {
+                ((Rook) movedPiece).setMoved();
+            } else if (movedPiece instanceof Pawn && Math.abs(source.getY() - destination.getY()) == 2) {
+                ((Pawn) movedPiece).setEnPassant(true);
+            }
+        }
     }
 
     private void executeEnPassant(Move move, List<Piece> pieces) {
@@ -341,8 +327,32 @@ public class BoardManager {
         rook.setLocation(destination);
     }
 
+    public boolean testMove(Move move) {
+        if (move == null) {
+            return false;
+        }
+
+        boolean result;
+        Piece removedPiece;
+        if (move.isEnPassant()) {
+            Tile destination = move.getTo();
+            int deltaY = move.getMovedPiece().getAlliance() == Alliance.WHITE ? 1 : -1;
+            removedPiece = board.get(destination.getY() + deltaY, destination.getX()).getPiece();
+        } else {
+            removedPiece = move.getTo().getPiece();
+        }
+
+        executeMove(move, true);
+        if (isChecked(move.getMovedPiece().getAlliance())) {
+            result = false;
+        } else {
+            result = true;
+        }
+        undoMove(move, removedPiece);
+        return result;
+    }
+
     private void undoMove(Move move, Piece removedPiece) {
-        // TODO: Implement
         if (move == null) {
             return;
         }
@@ -353,19 +363,23 @@ public class BoardManager {
 
         // Undo castling and En Passant
         if (move.isCastling()) {
-            undoCastle(move, removedPiece);
+            undoCastle(move);
         } else if (move.isEnPassant()) {
-            undoEnPassant(move, removedPiece);
+            undoEnPassant(move, removedPiece, pieces);
+        }
+        
+        // Undo the initial phase of the move
+        source.setPiece(movedPiece);
+        destination.setPiece(null);
+        movedPiece.setLocation(source);
+        if (removedPiece != null && !move.isEnPassant()) {
+            destination.setPiece(removedPiece);
+            removedPiece.setLocation(destination);
             pieces.add(removedPiece);
         }
-
-        // Undo the initial phase of the move
-        source.setPiece(move.getMovedPiece());
-        destination.setPiece(removedPiece);
-        move.getMovedPiece().setLocation(source);
     }
 
-    private void undoCastle(Move move, Piece removedPiece) {
+    private void undoCastle(Move move) {
         Player player = move.getMovedPiece().getAlliance() == Alliance.WHITE ? whitePlayer : blackPlayer;
         Rook rook;
         Tile source, destination;
@@ -388,33 +402,10 @@ public class BoardManager {
         rook.setLocation(destination);
     }
 
-    private void undoEnPassant(Move move, Piece removedPiece) {
-        Tile source = move.getFrom();
-        Tile destination = move.getTo();
-        Piece movedPiece = move.getMovedPiece();
-        int deltaX = destination.getX() - source.getX();
-        
-        source.setPiece(movedPiece);
-        destination.setPiece(null);
-        movedPiece.setLocation(source);
-        board.get(source.getY(), source.getX() + deltaX).setPiece(removedPiece);
-    }
-
-    public boolean testMove(Move move) {
-        if (move == null) {
-            return false;
-        }
-
-        boolean result;
-        Piece removedPiece = move.getTo().getPiece();
-        executeMove(move, true);
-        if (isChecked(move.getMovedPiece().getAlliance())) {
-            result = false;
-        } else {
-            result = true;
-        }
-        undoMove(move, removedPiece);
-        return result;
+    private void undoEnPassant(Move move, Piece removedPiece, List<Piece> pieces) {
+        Tile removedPieceTile = removedPiece.getLocation();
+        removedPieceTile.setPiece(removedPiece);
+        pieces.add(removedPiece);
     }
 
     public void addCastlingMoves(Alliance alliance, List<Move> kingMoves) { // Change over so that it is part of king's call

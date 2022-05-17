@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.*;
+// import java.util.*;
 
 import chess.board.*;
 import chess.player.*;
@@ -10,8 +10,8 @@ import chess.pieces.*;
 public class Game {
     private final Player whitePlayer;
     private final Player blackPlayer;
-    private List<Move> whiteMoves;
-    private List<Move> blackMoves;
+    // private List<Move> whiteMoves;
+    // private List<Move> blackMoves;
     private final Board board;
     private Alliance turn;
     private final BoardManager manager;
@@ -20,9 +20,9 @@ public class Game {
         this.board = new Board();
         this.whitePlayer = new Player(Alliance.WHITE, this.board);
         this.blackPlayer = new Player(Alliance.BLACK, this.board);
-        this.whiteMoves = whitePlayer.getMovesList();
-        this.blackMoves = blackPlayer.getMovesList();
-        this.manager = new BoardManager(board, whiteMoves, blackMoves, blackPlayer, whitePlayer);
+        // this.whiteMoves = whitePlayer.getMovesList();
+        // this.blackMoves = blackPlayer.getMovesList();
+        this.manager = new BoardManager(board, blackPlayer, whitePlayer);
         this.turn = Alliance.WHITE;
         whitePlayer.getKing().addManager(manager);
         blackPlayer.getKing().addManager(manager);
