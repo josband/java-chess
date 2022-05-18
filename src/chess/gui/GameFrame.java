@@ -40,7 +40,7 @@ public class GameFrame extends JFrame {
         this.destinationTile = null;
         this.humanMovedPiece = null;
         setTitle("Chess");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(Color.DARK_GRAY);
         getContentPane().setPreferredSize(new Dimension(640, 640));;
         setIconImage((new ImageIcon("./src/chess/pieces/piece PNGs/black-knight.png")).getImage());
@@ -138,23 +138,9 @@ public class GameFrame extends JFrame {
                                 humanMovedPiece = null;
                             } else {
                                 destinationTile = tile;
-                                // Check if there is a legal move for the human moved piece
-                                Move move = null;
-                                for (Move possibleMove : pieceLegalMoves(board)) {
-                                    if (possibleMove.getTo() == destinationTile) {
-                                        move = possibleMove;
-                                        manager.executeMove(move, false);
-                                        game.endTurn();
-                                        if (manager.isStaleMated(game.getTurn()))
-                                            System.out.println("Stalemate");
-                                        else if (manager.isMated(game.getTurn()))
-                                            System.out.println("Checkmate");
-                                        break;
-                                    }
-                                }
-                                sourceTile = null;
+                                // Check if there is a legal move for the human moved piece, reset destination if not a legal destination selection or legal and move is executed
+                                executeIfLegalMove();
                                 destinationTile = null;
-                                humanMovedPiece = null;
                             }
                             
                         }
@@ -227,12 +213,39 @@ public class GameFrame extends JFrame {
             List<Move> legalMoves = new ArrayList<Move>();
             if (humanMovedPiece != null && humanMovedPiece.getAlliance() == game.getTurn()) {
                 for (Move move : humanMovedPiece.calculateLegalMoves(board, sourceTile)) {
+                    // If the move pseudo-legal move is FULLY legal, add it
                     if (manager.testMove(move)) {
                         legalMoves.add(move);
                     }
                 }
             }
             return legalMoves;
+        }
+
+        private void executeIfLegalMove() {
+            for (Move move : pieceLegalMoves(board)) {
+                // If the legal move destination is our selected destination, execute the move
+                if (move.getTo() == destinationTile) {
+                    manager.executeMove(move, false);
+                    game.endTurn();
+                    checkForGameOver();
+                    // Reset source and tile
+                    sourceTile = null;
+                    humanMovedPiece = null;
+                    return;
+                }
+            }
+        }
+
+        private void checkForGameOver() {
+            if (manager.isStaleMated(game.getTurn())) {
+                System.out.println("Stalemate");
+                new GameOverFrame("Stalemate");
+            }
+            else if (manager.isMated(game.getTurn())) {
+                System.out.println("Checkmate");
+                new GameOverFrame("Checkmate");
+            } 
         }
     
         private void setColor() {
