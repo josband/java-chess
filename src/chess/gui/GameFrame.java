@@ -11,7 +11,6 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
-
 import chess.Game;
 import chess.board.Board;
 import chess.board.BoardManager;
@@ -190,6 +189,7 @@ public class GameFrame extends JFrame {
 
         public void drawTile(Board board) {
             setColor();
+            
             highlightLegalMoves(board);
             assignTilePiece();
             validate();
@@ -258,7 +258,6 @@ public class GameFrame extends JFrame {
     
         private void assignTilePiece() {
             // this.removeAll();
-            
             JLabel label = new JLabel();
             if (tile.getPiece() != null) {
                 if (tile.getPiece() instanceof King && tile.getPiece().getAlliance() == game.getTurn() 

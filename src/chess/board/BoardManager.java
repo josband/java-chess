@@ -105,7 +105,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX += 1;
@@ -125,7 +125,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX += -1;
@@ -145,7 +145,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX += -1;
@@ -165,7 +165,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX += 1;
@@ -188,7 +188,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && alliance == piece.getAlliance()) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX++;
@@ -205,7 +205,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currX--;     
@@ -224,7 +224,7 @@ public class BoardManager {
                     break;
                 }
             }
-             else if (checkTile.isOccupied() && piece.getAlliance() == alliance) {
+             else if (checkTile.isOccupied()) {
                 break;
             }
             currY++;     
@@ -241,7 +241,7 @@ public class BoardManager {
                 } else {
                     break;
                 }
-            } else if (checkTile.isOccupied() && piece.getAlliance() != alliance) {
+            } else if (checkTile.isOccupied()) {
                 break;
             }
             currY--;     

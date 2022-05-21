@@ -34,7 +34,6 @@ public class GameOverFrame extends JFrame {
             label.setForeground(Color.WHITE);
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setVerticalAlignment(JLabel.CENTER);
-            label.setOpaque(false);
 
             this.add(label);
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
